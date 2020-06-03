@@ -6,6 +6,8 @@
  {
      [Header("攻撃オブジェクト")] public GameObject attackObj;
      [Header("攻撃間隔")] public float interval;
+      private SpriteRenderer sr = null; 
+      private Rigidbody2D rb = null;
 
      private Animator anim;
      private float timer;
@@ -23,11 +25,17 @@
           {
               attackObj.SetActive(false);
           }
+          sr = GetComponent<SpriteRenderer>(); 
+          rb = GetComponent<Rigidbody2D>();
      }
 
      // Update is called once per frame
-     void Update()
+     void FixedUpdate()
      {
+         if (sr.isVisible)
+         {
+             Debug.Log("画面に見えている");
+         } 
           AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
 
           //通常の状態
@@ -44,8 +52,11 @@
               }
           }
      }
-     public void Attack()
-     {
-         Debug.Log("攻撃");
-     }
+          public void Attack()
+{
+     GameObject g = Instantiate(attackObj);
+     g.transform.SetParent(transform);
+     g.transform.position = attackObj.transform.position;
+     g.SetActive(true);
+}
  }
