@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: af4d0c7f684b736438fd862e55107d96
+guid: 891c3d2db50d4184bb072f8d39c0f077
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9156251320553379716
-    second: ene01_0
+      213: -4744425558056355202
+    second: ene02_0
   - first:
-      213: 3191132234958375713
-    second: ene01_1
+      213: 18733770933595149
+    second: ene02_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -141,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ene01_0
+      name: ene02_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 8
         y: 0
-        width: 178
-        height: 189
+        width: 187
+        height: 194
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c78e6349fe57ee080800000000000000
-      internalID: -9156251320553379716
+      spriteID: e7a34cc871a682eb0800000000000000
+      internalID: -4744425558056355202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ene01_1
+      name: ene02_1
       rect:
         serializedVersion: 2
-        x: 204
+        x: 208
         y: 0
-        width: 190
-        height: 189
+        width: 187
+        height: 194
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,8 +176,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12b0eff3cdd294c20800000000000000
-      internalID: 3191132234958375713
+      spriteID: d0cecc1f34e824000800000000000000
+      internalID: 18733770933595149
       vertices: []
       indices: 
       edges: []
