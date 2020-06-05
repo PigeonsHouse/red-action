@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BG
+    uniqueID: 1218643893
+    locked: 0
+  - name: Player
+    uniqueID: 201339967
+    locked: 0
+  - name: Behind map
+    uniqueID: 336129205
+    locked: 0
