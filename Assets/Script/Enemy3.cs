@@ -2,42 +2,55 @@
  using System.Collections.Generic;
  using UnityEngine;
  
- public class Enemy3 : MonoBehaviour
- {
-     #region//インスペクターで設定する
-     [Header("移動速度")]public float speed;
-     [Header("重力")]public float gravity;
-     [Header("画面外でも行動する")] public bool nonVisibleAct;
-     #endregion
- 
-     #region//プライベート変数
-     private Rigidbody2D rb = null;
-     private SpriteRenderer sr = null;
-     private bool rightTleftF = false;
-     #endregion
- 
-     // Start is called before the first frame update
-     void Start()
-     {
-         rb = GetComponent<Rigidbody2D>();
-         sr = GetComponent<SpriteRenderer>();
-     }
- 
-     void FixedUpdate()
-     {
-         if (sr.isVisible || nonVisibleAct)
+ public class Enemy3 : MonoBehaviour {
+	
+	Rigidbody2D rigidbody2D;
+	public int speed = -3;
+	
+	
+//********** 開始 **********//
+	//メインカメラのタグ名　constは定数(絶対に変わらない値)
+	private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
+	//カメラに映っているかの判定
+	private bool _isRendered = false;
+//********** 終了 **********//
+	
+	void Start () {
+		rigidbody2D = GetComponent<Rigidbody2D>();
+		
+	}
+	
+	void Update ()
+	{
+//********** 開始 **********//
+		if (_isRendered)
          {
-             int xVector = -1;
-             if (rightTleftF)
-             {
-                 xVector = 1;
-                 transform.localScale = new Vector3(-1, 1, 1);
-             }
-             else
-             {
-                 transform.localScale = new Vector3(1, 1, 1);
-             }
-             rb.velocity = new Vector2(xVector * speed, -gravity);
-         }
-     }
- }
+			rigidbody2D.velocity = new Vector2 (speed, rigidbody2D.velocity.y);
+		 }
+//********** 終了 **********//
+	}
+	
+	void OnTriggerEnter2D (Collider2D col)
+	{
+//********** 開始 **********//
+	
+		}
+//********** 終了 **********//
+	
+
+	void OnCollisionEnter2D (Collision2D col)
+	{
+		
+	}
+ //********** 開始 **********//
+	//Rendererがカメラに映ってる間に呼ばれ続ける
+	void OnWillRenderObject()
+	{
+    //メインカメラに映った時だけ_isRenderedをtrue
+		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME)
+        {
+		_isRendered = true;
+		}
+	}
+//********** 終了 **********//
+}

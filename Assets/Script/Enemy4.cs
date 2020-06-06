@@ -13,8 +13,13 @@
      #region//プライベート変数
      private Rigidbody2D rb = null;
      private SpriteRenderer sr = null;
-     private bool rightTleftF = false;
+     /*private bool rightTleftF = false;*/
      #endregion
+     public Vector2 jumpforce;
+     private float timer = 0;
+     public float jumpinterval;
+     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
+     private bool _isRendered = false;
  
      // Start is called before the first frame update
      void Start()
@@ -25,7 +30,21 @@
  
      void FixedUpdate()
      {
-         if (sr.isVisible || nonVisibleAct)
+         
+		
+         if(_isRendered){
+
+         
+         if (timer>jumpinterval){
+         rb.AddForce(jumpforce,ForceMode2D.Impulse);
+         timer=0;
+         }
+
+         }
+         timer+=Time.fixedDeltaTime;
+
+
+         /*if (sr.isVisible || nonVisibleAct)
          {
              int xVector = -1;
              if (rightTleftF)
@@ -38,6 +57,13 @@
                  transform.localScale = new Vector3(1, 1, 1);
              }
              rb.velocity = new Vector2(xVector * speed, -gravity);
-         }
+         }*/
      }
+     void OnWillRenderObject()
+	{
+    //メインカメラに映った時だけ_isRenderedをtrue
+		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME){
+		_isRendered = true;
+		}
+	}
  }

@@ -6,8 +6,10 @@
  {
      [Header("攻撃オブジェクト")] public GameObject attackObj;
      [Header("攻撃間隔")] public float interval;
-      private SpriteRenderer sr = null; 
-      private Rigidbody2D rb = null;
+     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
+	//カメラに映っているかの判定
+	private bool _isRendered = false;
+      Rigidbody2D rigidbody2D;
 
      private Animator anim;
      private float timer;
@@ -25,17 +27,13 @@
           {
               attackObj.SetActive(false);
           }
-          sr = GetComponent<SpriteRenderer>(); 
-          rb = GetComponent<Rigidbody2D>();
+         
+          rigidbody2D = GetComponent<Rigidbody2D>();
      }
 
      // Update is called once per frame
      void FixedUpdate()
      {
-         if (sr.isVisible)
-         {
-             Debug.Log("画面に見えている");
-         } 
           AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
 
           //通常の状態
@@ -51,12 +49,25 @@
                   timer += Time.deltaTime;
               }
           }
+          
      }
+         
           public void Attack()
-{
+   {
+       if(_isRendered)
+       {
      GameObject g = Instantiate(attackObj);
      g.transform.SetParent(transform);
      g.transform.position = attackObj.transform.position;
-     g.SetActive(true);
-}
+     g.SetActive(true);   
+       }
+   }
+
+   void OnWillRenderObject()
+	{
+    //メインカメラに映った時だけ_isRenderedをtrue
+		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME){
+		_isRendered = true;
+		}
+	}
  }
