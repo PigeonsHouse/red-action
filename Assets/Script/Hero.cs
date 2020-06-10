@@ -92,12 +92,9 @@ public class Hero : MonoBehaviour
             //落ちるy座標の取得
             Vector2 thunOrigin = new Vector2( transform.position.x + 7f * checkLR, 6.1f );
             RaycastHit2D thunHit = Physics2D.Raycast( thunOrigin, Vector2.down, 12.1f );
-<<<<<<< HEAD
             if ( thunHit.point.y < transform.position.y - 8f ){
                 thunHit.point = new Vector2(thunHit.point.x, transform.position.y - 8f);
             }
-=======
->>>>>>> sanshibranch01
             //雷の複製
 			GameObject thunder;
             //複製した雷を生成
