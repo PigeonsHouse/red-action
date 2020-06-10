@@ -2,10 +2,11 @@
  using System.Collections.Generic;
  using UnityEngine;
  
- public class Enemy1 : MonoBehaviour {
+ public class ene01 : MonoBehaviour {
 	
 	Rigidbody2D rigidbody2D;
 	public int speed = -3;
+	public GameObject explosion;
 	
 	
 //********** 開始 **********//
@@ -33,7 +34,10 @@
 	void OnTriggerEnter2D (Collider2D col)
 	{
 //********** 開始 **********//
-	
+	if (col.tag == "Bullet") {
+			Destroy (gameObject);
+			Instantiate (explosion, transform.position, transform.rotation);
+		}
 		}
 //********** 終了 **********//
 	

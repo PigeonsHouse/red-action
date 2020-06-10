@@ -2,7 +2,7 @@
  using System.Collections.Generic;
  using UnityEngine;
  
- public class Enemy4 : MonoBehaviour
+ public class ene03 : MonoBehaviour
  {
      #region//インスペクターで設定する
      [Header("移動速度")]public float speed;

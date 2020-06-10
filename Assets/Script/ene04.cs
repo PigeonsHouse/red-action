@@ -2,7 +2,7 @@
  using System.Collections.Generic;
  using UnityEngine;
  
- public class Enemy3 : MonoBehaviour {
+ public class ene04 : MonoBehaviour {
 	
 	Rigidbody2D rigidbody2D;
 	public int speed = -3;

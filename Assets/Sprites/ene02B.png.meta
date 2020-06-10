@@ -1,7 +1,22 @@
 fileFormatVersion: 2
-guid: acd8735ffafb8b0429afc81e1d31daa0
+guid: 476c0e8315c27ac43a4d56df70de7c20
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 1664657117677195518
+    second: ene02B_0
+  - first:
+      213: 543182398837691879
+    second: ene02B_1
+  - first:
+      213: 3914359245147545517
+    second: ene02B_2
+  - first:
+      213: 2353761829378122397
+    second: ene02B_3
+  - first:
+      213: 1610037909920362590
+    second: ene02B_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -31,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -133,7 +148,112 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ene02B_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 275
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef099fb24dc0a1710800000000000000
+      internalID: 1664657117677195518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ene02B_1
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 275
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e517fa8385c98700800000000000000
+      internalID: 543182398837691879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ene02B_2
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 275
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf194a8ef8925630800000000000000
+      internalID: 3914359245147545517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ene02B_3
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 0
+        width: 275
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d92e4fdb9ed3aa020800000000000000
+      internalID: 2353761829378122397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ene02B_4
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 275
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5037bfd2f0085610800000000000000
+      internalID: 1610037909920362590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

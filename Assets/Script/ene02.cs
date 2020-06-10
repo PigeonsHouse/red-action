@@ -2,7 +2,7 @@
  using System.Collections.Generic;
  using UnityEngine;
 
- public class Enemy2 : MonoBehaviour
+ public class ene02 : MonoBehaviour
  {
      [Header("攻撃オブジェクト")] public GameObject attackObj;
      [Header("攻撃間隔")] public float interval;
@@ -37,8 +37,8 @@
           AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
 
           //通常の状態
-          if (currentState.IsName("idle"))
-          {
+          /*if (currentState.IsName("idle"))
+          {*/
               if(timer > interval)
               {
                   anim.SetTrigger("attack");
@@ -48,8 +48,17 @@
               {
                   timer += Time.deltaTime;
               }
+          /*}*/
+
+          /* if(timer > interval)
+          {
+              anim.SetBool("Attack", true);
+              timer = 0.0f;
           }
-          
+         /* else
+          {
+              timer += Time.deltaTime;
+          }*/
      }
          
           public void Attack()
