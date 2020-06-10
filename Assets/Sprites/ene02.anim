@@ -20,6 +20,17 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+      value: {fileID: -4744425558056355202, guid: 891c3d2db50d4184bb072f8d39c0f077,
+        type: 3}
+    - time: 0.23333333
+      value: {fileID: 18733770933595149, guid: 891c3d2db50d4184bb072f8d39c0f077, type: 3}
+    - time: 0.48333332
+      value: {fileID: -4744425558056355202, guid: 891c3d2db50d4184bb072f8d39c0f077,
+=======
+>>>>>>> sanshibranch01
       value: {fileID: -8031124711099343648, guid: a4871f183dbefbe45a323afa9a740284,
         type: 3}
     - time: 0.23333333
@@ -27,6 +38,10 @@ AnimationClip:
         type: 3}
     - time: 0.48333332
       value: {fileID: -8031124711099343648, guid: a4871f183dbefbe45a323afa9a740284,
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> sanshibranch01
         type: 3}
     attribute: m_Sprite
     path: 
@@ -47,9 +62,21 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
+<<<<<<< HEAD
     - {fileID: -8031124711099343648, guid: a4871f183dbefbe45a323afa9a740284, type: 3}
     - {fileID: -6054191270343195823, guid: a4871f183dbefbe45a323afa9a740284, type: 3}
     - {fileID: -8031124711099343648, guid: a4871f183dbefbe45a323afa9a740284, type: 3}
+=======
+<<<<<<< Updated upstream
+    - {fileID: -4744425558056355202, guid: 891c3d2db50d4184bb072f8d39c0f077, type: 3}
+    - {fileID: 18733770933595149, guid: 891c3d2db50d4184bb072f8d39c0f077, type: 3}
+    - {fileID: -4744425558056355202, guid: 891c3d2db50d4184bb072f8d39c0f077, type: 3}
+=======
+    - {fileID: -8031124711099343648, guid: a4871f183dbefbe45a323afa9a740284, type: 3}
+    - {fileID: -6054191270343195823, guid: a4871f183dbefbe45a323afa9a740284, type: 3}
+    - {fileID: -8031124711099343648, guid: a4871f183dbefbe45a323afa9a740284, type: 3}
+>>>>>>> Stashed changes
+>>>>>>> sanshibranch01
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 2c8bea4c1567c134a868625e1a5c1d8d
+=======
+guid: 56371b87077a7f74c869d2b18f73934f
+>>>>>>> sanshibranch01
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
