@@ -111,4 +111,10 @@ void OnWillRenderObject()
 		_isRendered = true;
 		}
 	}
+    void OnTriggerEnter2D (Collider2D col)
+	{
+		if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
+			Destroy (gameObject);	
+        }
+	}
 }

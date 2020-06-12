@@ -66,4 +66,10 @@
 		_isRendered = true;
 		}
 	}
+    void OnTriggerEnter2D (Collider2D col)
+	{
+		if (col.gameObject.tag == "Fire"){
+			Destroy (gameObject);	
+        }
+	}
  }
