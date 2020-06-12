@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour
 {
@@ -12,14 +13,17 @@ public class Hero : MonoBehaviour
     public LayerMask groundLayer;       //レイヤー保存用変数
     public float logLR = 1;             //fire.csに渡す用プレイヤーの左右向き
     public float minstagelocate;        //一番左端の座標
+    public float fallposision = -10;    //落ちる時のy座標
     private float checkLR = 1;          //プレイヤーの左右向き
     private bool isGround;              //接地フラグ
     private bool isAttack;              //攻撃フラグ
+    private int life = 5;               //ライフ
     private Rigidbody2D rb2d;           //ゲット用の変数
     private SpriteRenderer spRenderer;  //ゲット用の変数
 
     // Start is called before the first frame update
     void Start(){
+        Debug.Log(life);
         this.rb2d = GetComponent<Rigidbody2D>();
         this.spRenderer = GetComponent<SpriteRenderer>();
     }
@@ -102,7 +106,14 @@ public class Hero : MonoBehaviour
             //雷の位置をplayerの位置に設定
 			thunder.transform.position = new Vector3(transform.position.x + 7f * checkLR, thunHit.point.y, 0f);
         }
-
+        if ( life <= 0 && GameObject.Find("Hero") ){
+            Destroy(gameObject);
+            SceneManager.LoadScene("ActionScene");
+        }
+        if ( transform.position.y < fallposision ){
+            Destroy(gameObject);
+            SceneManager.LoadScene("ActionScene");
+        }
     }
 
     void FixedUpdate(){
@@ -122,5 +133,19 @@ public class Hero : MonoBehaviour
                 groundLayer
             );
 
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+        if (col.gameObject.tag == "Enemy1"){
+            life -= 1;
+            Debug.Log(life);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider){
+        if (collider.gameObject.tag == "Enemy1"){
+            life -= 1;
+            Debug.Log(life);
+        }
     }
 }

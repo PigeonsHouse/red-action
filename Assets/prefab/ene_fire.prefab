@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7160397803659770163}
   m_Layer: 0
   m_Name: ene_fire
-  m_TagString: Enemy_Attack
+  m_TagString: Enemy1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 201339967
-  m_SortingLayer: 0
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 8334651344603559088, guid: fe9d376a2fe4e8c4e8307d5a27a98b40,
     type: 3}
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 7874254904632290595}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8bf02709d052cdd4490cf5e71f234b7b, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
