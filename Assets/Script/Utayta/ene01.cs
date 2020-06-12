@@ -9,6 +9,7 @@ public class ene01 : MonoBehaviour {
 	public GameObject explosion;
 	private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
 	private bool _isRendered = false;	
+	private int right = 1;
 	void Start () {
 		rigidbody2D = GetComponent<Rigidbody2D>();	
 	}
@@ -16,7 +17,7 @@ public class ene01 : MonoBehaviour {
 	void Update ()
 	{
 		if (_isRendered){
-			rigidbody2D.velocity = new Vector2 (speed, rigidbody2D.velocity.y);
+			rigidbody2D.velocity = new Vector2 (speed * right, rigidbody2D.velocity.y);
 		}
 	}
 	
@@ -25,6 +26,9 @@ public class ene01 : MonoBehaviour {
 		if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
 			Destroy (gameObject);	
         }
+		if (col.gameObject.layer == 8 || col.gameObject.tag == "Enemy1" ){
+			right = right * -1;
+		}
 	}
 	
 

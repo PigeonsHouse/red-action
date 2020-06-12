@@ -6,6 +6,7 @@
 	
 	Rigidbody2D rigidbody2D;
 	public int speed = -3;
+	private int right = 1;
 	
 	
 //********** 開始 **********//
@@ -22,12 +23,10 @@
 	
 	void Update ()
 	{
-//********** 開始 **********//
 		if (_isRendered)
          {
-			rigidbody2D.velocity = new Vector2 (speed, rigidbody2D.velocity.y);
+			rigidbody2D.velocity = new Vector2 (speed * right, rigidbody2D.velocity.y);
 		 }
-//********** 終了 **********//
 	}
 	
 	
@@ -37,21 +36,20 @@
 	{
 		
 	}
- //********** 開始 **********//
-	//Rendererがカメラに映ってる間に呼ばれ続ける
 	void OnWillRenderObject()
 	{
-    //メインカメラに映った時だけ_isRenderedをtrue
 		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME)
         {
 		_isRendered = true;
 		}
 	}
-//********** 終了 **********//
 	void OnTriggerEnter2D (Collider2D col)
 	{
 		if (col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
 			Destroy (gameObject);	
         }
+		if (col.gameObject.layer == 8 || col.gameObject.tag == "Enemy1" ){
+			right = right * -1;
+		}
 	}
 }
