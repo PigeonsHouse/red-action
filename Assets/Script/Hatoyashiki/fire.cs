@@ -41,4 +41,11 @@ public class fire : MonoBehaviour
         }
         Destroy( gameObject, 0.5f );
     }
+
+    void OnTriggerEnter2D(Collider2D col){
+        if (col.gameObject.tag == "Enemy1" || col.gameObject.layer == 8 ){
+            Destroy( gameObject );
+        }
+    }
+
 }
