@@ -108,11 +108,11 @@ public class Hero : MonoBehaviour
         }
         if ( life <= 0 && GameObject.Find("Hero") ){
             Destroy(gameObject);
-            SceneManager.LoadScene("ActionScene");
+            SceneManager.LoadScene("Game");
         }
         if ( transform.position.y < fallposision ){
             Destroy(gameObject);
-            SceneManager.LoadScene("ActionScene");
+            SceneManager.LoadScene("Game");
         }
     }
 
