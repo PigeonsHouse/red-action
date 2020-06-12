@@ -14,10 +14,10 @@ public class Hero : MonoBehaviour
     public float logLR = 1;             //fire.csに渡す用プレイヤーの左右向き
     public float minstagelocate;        //一番左端の座標
     public float fallposision = -10;    //落ちる時のy座標
+    public int life = 5;               //ライフ
     private float checkLR = 1;          //プレイヤーの左右向き
     private bool isGround;              //接地フラグ
     private bool isAttack;              //攻撃フラグ
-    private int life = 5;               //ライフ
     private Rigidbody2D rb2d;           //ゲット用の変数
     private SpriteRenderer spRenderer;  //ゲット用の変数
 
