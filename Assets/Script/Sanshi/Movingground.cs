@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveObject : MonoBehaviour
+public class Movingground : MonoBehaviour
  {
      [Header("移動経路")]public GameObject[] movePoint;
      [Header("速さ")]public float speed = 1.0f;
