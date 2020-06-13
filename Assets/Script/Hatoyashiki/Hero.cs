@@ -20,12 +20,14 @@ public class Hero : MonoBehaviour
     private bool isAttack;              //攻撃フラグ
     private Rigidbody2D rb2d;           //ゲット用の変数
     private SpriteRenderer spRenderer;  //ゲット用の変数
+    private Animator anim;              //ゲット用の変数
 
     // Start is called before the first frame update
     void Start(){
         Debug.Log(life);
-        this.rb2d = GetComponent<Rigidbody2D>();
-        this.spRenderer = GetComponent<SpriteRenderer>();
+        rb2d = GetComponent<Rigidbody2D>();
+        spRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -38,6 +40,9 @@ public class Hero : MonoBehaviour
             spRenderer.flipX = false;
             checkLR = 1;
         }
+
+        anim.SetFloat("Speed", Mathf.Abs(hori * speed));
+        anim.SetBool("isGround", isGround );
 
         rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
 
