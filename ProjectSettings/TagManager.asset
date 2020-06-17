@@ -8,6 +8,7 @@ TagManager:
   - Fire
   - Rock
   - Thunder
+  - Movefloor
   layers:
   - Default
   - TransparentFX
