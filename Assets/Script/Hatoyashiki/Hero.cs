@@ -61,10 +61,10 @@ public class Hero : MonoBehaviour
             }
         }
 
-        if ( Input.GetButtonDown("Jump") && isGround ){                     //ジャンプ処理
+        if ( Input.GetKeyDown(KeyCode.K) && isGround ){                     //ジャンプ処理
             rb2d.AddForce( Vector2.up * jumpforce , ForceMode2D.Impulse);
         }
-        if ( !Input.GetButton("Jump") && !isGround ){
+        if ( !Input.GetKey(KeyCode.K) && !isGround ){
             rb2d.AddForce( Vector2.down * 9);
         }
 
@@ -72,7 +72,7 @@ public class Hero : MonoBehaviour
             isAttack = false;
         }
 
-        if ( Input.GetKeyDown("x") && !( Input.GetKey("up") ) && !( Input.GetKey("down") ) && !isAttack ){      //火球の生成処理
+        if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && !( Input.GetKey(KeyCode.S) ) && !isAttack ){      //火球の生成処理
             isAttack = true;
             logLR = checkLR;
             //火球の複製
@@ -83,7 +83,7 @@ public class Hero : MonoBehaviour
 			bullet.transform.position = transform.position + new Vector3(0f, -0.7f, 0f);
         }
 
-        if ( Input.GetKeyDown("x") && !( Input.GetKey("up") ) && Input.GetKey("down") && !isAttack && isGround ){   //岩の生成処理
+        if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && Input.GetKey(KeyCode.S) && !isAttack && isGround ){   //岩の生成処理
             isAttack = true;
             //岩の複製
 			GameObject rock_0;
@@ -96,7 +96,7 @@ public class Hero : MonoBehaviour
 			rock_1.transform.position = transform.position + new Vector3(-2f, 0.5f, 0f);
         }
 
-        if ( Input.GetKeyDown("x") && Input.GetKey("up") && !( Input.GetKey("down") ) && !isAttack ){      //雷の生成処理
+        if ( Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.W) && !( Input.GetKey(KeyCode.S) ) && !isAttack ){      //雷の生成処理
             isAttack = true;
             //落ちるy座標の取得
             Vector2 thunOrigin = new Vector2( transform.position.x + 7f * checkLR, 6.1f );
