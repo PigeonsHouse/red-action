@@ -18,6 +18,9 @@ public class Hero : MonoBehaviour
     private float checkLR = 1;          //プレイヤーの左右向き
     private bool isGround;              //接地フラグ
     private bool isAttack;              //攻撃フラグ
+    private bool isAttackFire;          //攻撃フラグ
+    private bool isAttackRock;          //攻撃フラグ
+    private bool isAttackThunder;       //攻撃フラグ
     private Rigidbody2D rb2d;           //ゲット用の変数
     private SpriteRenderer spRenderer;  //ゲット用の変数
     private Animator anim;              //ゲット用の変数
@@ -33,25 +36,31 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update(){
         float hori = Input.GetAxisRaw("Horizontal");                       //グラフィック左右反転処理
-        if ( hori < 0 ){
-            spRenderer.flipX = true;
-            checkLR = -1;
-        }else if ( hori > 0 ){
-            spRenderer.flipX = false;
-            checkLR = 1;
+        if (!isAttackRock){
+            if ( hori < 0 ){
+                spRenderer.flipX = true;
+                checkLR = -1;
+            }else if ( hori > 0 ){
+                spRenderer.flipX = false;
+                checkLR = 1;
+            }
+            rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
         }
 
         anim.SetFloat("Speed", Mathf.Abs(hori * speed));
         anim.SetBool("isGround", isGround );
-
-        rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
-
+        
         float velX = rb2d.velocity.x;                                       //最大速度調整
         float velY = rb2d.velocity.y;
         if( transform.position.x < minstagelocate ){
             transform.position = new Vector2( minstagelocate, transform.position.y );
             rb2d.velocity = new Vector2( 0f, velY );
         }
+
+        if (isAttackRock){
+            rb2d.velocity = new Vector2( 0f, velY );
+        }
+
         if( Mathf.Abs(velX) > 8 ){
             if( velX > 8.0f ){
                 rb2d.velocity = new Vector2( 8.0f, velY );
@@ -61,7 +70,7 @@ public class Hero : MonoBehaviour
             }
         }
 
-        if ( Input.GetKeyDown(KeyCode.K) && isGround ){                     //ジャンプ処理
+        if ( Input.GetKeyDown(KeyCode.K) && isGround && !isAttackRock ){                     //ジャンプ処理
             rb2d.AddForce( Vector2.up * jumpforce , ForceMode2D.Impulse);
         }
         if ( !Input.GetKey(KeyCode.K) && !isGround ){
@@ -69,11 +78,12 @@ public class Hero : MonoBehaviour
         }
 
         if( !( GameObject.Find("fire(Clone)") ) && !( GameObject.Find("rock(Clone)") ) && !( GameObject.Find("thunder(Clone)") ) ){       //攻撃中でない場合フラグを降ろす
-            isAttack = false;
+            isAttackThunder = isAttackRock = isAttackFire = isAttack = false;
         }
 
         if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && !( Input.GetKey(KeyCode.S) ) && !isAttack ){      //火球の生成処理
             isAttack = true;
+            isAttackFire = true;
             logLR = checkLR;
             //火球の複製
 			GameObject bullet;
@@ -85,6 +95,7 @@ public class Hero : MonoBehaviour
 
         if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && Input.GetKey(KeyCode.S) && !isAttack && isGround ){   //岩の生成処理
             isAttack = true;
+            isAttackRock = true;
             //岩の複製
 			GameObject rock_0;
 			GameObject rock_1;
@@ -98,6 +109,7 @@ public class Hero : MonoBehaviour
 
         if ( Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.W) && !( Input.GetKey(KeyCode.S) ) && !isAttack ){      //雷の生成処理
             isAttack = true;
+            isAttackThunder = true;
             //落ちるy座標の取得
             Vector2 thunOrigin = new Vector2( transform.position.x + 7f * checkLR, 6.1f );
             RaycastHit2D thunHit = Physics2D.Raycast( thunOrigin, Vector2.down, 130.1f );
@@ -114,6 +126,9 @@ public class Hero : MonoBehaviour
             //雷の位置をplayerの位置に設定
 			thunder.transform.position = new Vector3(transform.position.x + 7f * checkLR, thunHit.point.y, 0f);
         }
+
+        anim.SetBool("isAttackRock", isAttackRock );
+
         if ( life <= 0 && GameObject.Find("Hero") ){
             Destroy(gameObject);
             SceneManager.LoadScene("Game");
