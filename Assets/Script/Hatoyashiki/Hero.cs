@@ -14,7 +14,8 @@ public class Hero : MonoBehaviour
     public float logLR = 1;             //fire.csに渡す用プレイヤーの左右向き
     public float minstagelocate;        //一番左端の座標
     public float fallposision = -10;    //落ちる時のy座標
-    public int life = 5;               //ライフ
+    public int maxlife = 5;             //上限ライフ
+    private int life;                    //ライフ
     private float checkLR = 1;          //プレイヤーの左右向き
     private bool isGround;              //接地フラグ
     private bool isAttack;              //攻撃フラグ
@@ -27,6 +28,7 @@ public class Hero : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        life = maxlife;
         Debug.Log(life);
         rb2d = GetComponent<Rigidbody2D>();
         spRenderer = GetComponent<SpriteRenderer>();
@@ -127,6 +129,7 @@ public class Hero : MonoBehaviour
 			thunder.transform.position = new Vector3(transform.position.x + 7f * checkLR, thunHit.point.y, 0f);
         }
 
+        anim.SetBool("isAttackFire", isAttackFire );
         anim.SetBool("isAttackRock", isAttackRock );
 
         if ( life <= 0 && GameObject.Find("Hero") ){
@@ -168,6 +171,10 @@ public class Hero : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.tag == "Enemy1"){
             life -= 1;
+            Debug.Log(life);
+        }
+        if (collider.gameObject.tag == "Food"){
+            if (life < maxlife) life += 1;
             Debug.Log(life);
         }
     }
