@@ -9,6 +9,8 @@ TagManager:
   - Rock
   - Thunder
   - Movefloor
+  - Food
+  - Hero
   layers:
   - Default
   - TransparentFX
