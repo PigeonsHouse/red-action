@@ -151,8 +151,9 @@ public class Hero : MonoBehaviour
 
             if (isHit && count == 0) {
                 rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
-                rb2d.AddForce( new Vector2(checkLR * -1f, 1f) * 14f , ForceMode2D.Impulse);
-                count = 120; // 無敵時間をセット
+                rb2d.AddForce( new Vector2(checkLR * -1f, 1f) * 8f , ForceMode2D.Impulse);
+                count = 360; // 無敵時間をセット
+                gameObject.layer = LayerMask.NameToLayer("PLdamage");
             }
             if (count > 0) {
                 if (count % 4 == 2 || count % 4 == 3){
@@ -165,6 +166,7 @@ public class Hero : MonoBehaviour
                     // 無敵時間の終わり
                     count = 0;
                     isHit = false;
+                    gameObject.layer = LayerMask.NameToLayer("Default");
                 }
             }
 

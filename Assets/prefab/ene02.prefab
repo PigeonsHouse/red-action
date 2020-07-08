@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4731705078763000608}
   - component: {fileID: 4731705078763000610}
   - component: {fileID: 8921696213744582066}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ene02
   m_TagString: Enemy1
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4731705079428995378}
   - component: {fileID: 4731705079428995379}
   - component: {fileID: 4731705079428995372}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ene_fire
   m_TagString: Enemy1
   m_Icon: {fileID: 0}
