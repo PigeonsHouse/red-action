@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Warpsystem : MonoBehaviour
-{   
-    void OnControllerColliderHit(ControllerColliderHit hit){
-        if (hit.gameObject.tag == "Warp") {
-            GetComponent<Hero>().enabled = false;
-            transform.position = new Vector3(20,-1,0);
-            GetComponent<Hero>().enabled = true;
-            Debug.Log(hit.gameObject);
-        }
-
+{
+    private GameObject obj;
+    public Warpsystem transObj;
+    private Vector3 transVec;
+ 
+    void Start()
+    {
+        //移動先(円柱B)の座標を取得する
+        transVec = transObj.transform.position;
     }
-}
+ 
+    //物体と重なる瞬間呼ばれる
+    void OnTriggerEnter(Collider other)
+    {
+        //重なったオブジェクトを取得
+        obj = GameObject.Find(other.name);
+        //移動先(円柱B)の座標に移動する
+        obj.transform.position = transVec;
+    }
+    }
