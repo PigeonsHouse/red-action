@@ -4,117 +4,75 @@ using UnityEngine;
 
 public class ene05 : MonoBehaviour
 {
-    Rigidbody2D rigidbody2D;
+    public float jumptimer = 0;
+    public float timer = 0;
+    public float at_time;
+    public float interval;
+    public float jump;
+    GameObject Hero;
+    public GameObject k_at;
+    private Animator anim;
+    Rigidbody2D rigidbody2;
+    public Vector2 force1;
     public Vector2 jumpforce;
-
-     private float timer = 0;
-     private float timer1 = 0;
-     public float jumpinterval;
-   public Shot m_shotPrefab; // 弾のプレハブ
-public float m_shotSpeed; // 弾の移動の速さ
-public float m_shotAngleRange; // 複数の弾を発射する時の角度
-public float m_shotTimer; // 弾の発射タイミングを管理するタイマー
-public int m_shotCount; // 弾の発射数
-public float m_shotInterval; // 弾の発射間隔（秒）
-private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
-     private bool _isRendered = false;
-
-    private void Start()
+    private bool isAttack_K;  
+    Vector2 moveVector;                  // 移動速度の入力
+    public float moveForceMultiplier;     // 移動速度の入力に対する追従度
+    private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
+    private bool _isRendered = false;
+    void Start() 
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2 = GetComponent<Rigidbody2D>();
+        this.Hero = GameObject.Find("Hero");
+        anim = GetComponent<Animator>();
     }
-
-    // 毎フレーム呼び出される関数
-    private void Update()
-    {     
-// プレイヤーのスクリーン座標を計算する
-var screenPos = Camera.main.WorldToScreenPoint( transform.position );
-
-// プレイヤーから見たマウスカーソルの方向を計算する
-var direction = Input.mousePosition - screenPos;
-
-// マウスカーソルが存在する方向の角度を取得する
-var angle = Utils.GetAngle( Vector3.zero, direction );
-
-
-// 弾の発射タイミングを管理するタイマーを更新する
-m_shotTimer += Time.deltaTime;
-
-// まだ弾の発射タイミングではない場合は、ここで処理を終える
-/*if ( m_shotTimer < m_shotInterval ) return;*/
-/*if(m_shotTimer>m_shotInterval) m_shotTimer = 0;*/
-
-// 弾の発射タイミングを管理するタイマーをリセットする
-/*m_shotTimer = 0;*/
-
-// 弾を発射する
-
-ShootNWay( angle, m_shotAngleRange, m_shotSpeed, m_shotCount );
-
-
-    if(_isRendered){
-         if (timer1>jumpinterval)
-         {
-         rigidbody2D.AddForce(jumpforce,ForceMode2D.Impulse);
-         timer1=0;
-         }
-          timer1 += Time.fixedDeltaTime;
-          timer += Time.fixedDeltaTime;
-
-         if(timer < 4)
-         {
-          this.transform.position += new Vector3(-0.1f, 0, 0);
-         }
-         else
-         {
-          this.transform.position += new Vector3(0.1f, 0, 0);
-         }
-
-         if(timer > 8)
-         {
-             timer = 0;
-         }
-    }
-    }
-    private void ShootNWay( 
-    float angleBase, float angleRange, float speed, int count )
-{
-    if(_isRendered)
+    void FixedUpdate()
     {
-    var pos = transform.localPosition; // プレイヤーの位置
-    var rot = transform.localRotation; // プレイヤーの向き
-
-if(m_shotTimer > m_shotInterval)
-{
-    for ( int i = 0; i < count; ++i )
-        {
-            // 弾の発射角度を計算する
-            var angle = angleBase + 
-                angleRange * ( ( float )i / ( count - 1 ) - 0.5f );
-
-            // 発射する弾を生成する
-            var shot = Instantiate( m_shotPrefab, pos, rot );
-
-            // 弾を発射する方向と速さを設定する
-            shot.Init( angle, speed );
+        Vector2 HeroPos = Hero.transform.position;
+        Vector2 st = transform.position;  
+        if(jumptimer < jump) {
+            jumptimer += Time.fixedDeltaTime;
+        } else {
+            GetComponent<Rigidbody2D>().AddForce(jumpforce,ForceMode2D.Impulse);
+            jumptimer = 0;
         }
-    m_shotTimer = 0;
-}
-}
-
-}
-void OnWillRenderObject()
-	{
-    //メインカメラに映った時だけ_isRenderedをtrue
-		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME)
-        {
-		_isRendered = true;
-		}
-	}
+        if (_isRendered) {
+            if(HeroPos.x < transform.position.x) {
+                GetComponent<Rigidbody2D>().AddForce(-force1, ForceMode2D.Impulse); 
+            } else {
+                GetComponent<Rigidbody2D>().AddForce(force1, ForceMode2D.Impulse); 
+            }
+        }
+        rigidbody2.AddForce(moveForceMultiplier * (moveVector - rigidbody2.velocity));
+        Vector2 origin = new Vector2( transform.position.x, transform.position.y - 2f );
+        RaycastHit2D hit = Physics2D.Raycast( origin , Vector2.down, 130.1f );
+        if (hit.collider != null) {
+            if (hit.collider.tag == "Hero"){
+                if (timer > interval) {
+                    isAttack_K = true;
+                    GameObject attackObj;  //火球の複製
+                    attackObj = Instantiate (k_at);    //複製した火球を生成
+                    attackObj.transform.position = transform.position + new Vector3(0f, -1.6f, 0f);    //火球の位置をplayerの位置に設定
+                    timer = 0;
+                } else {
+                    timer += Time.deltaTime;
+                } 
+            }
+        } else {
+            timer = 3;
+        }
+    }
     void OnTriggerEnter2D (Collider2D col)
 	{
-		if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
-			Destroy (gameObject);	
+        if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
+        Destroy (gameObject);
         }
+	}
+    void OnWillRenderObject()
+	{
+    //メインカメラに映った時だけ_isRenderedをtrue
+		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME) {
+		_isRendered = true;
+		}
 	}
 }
