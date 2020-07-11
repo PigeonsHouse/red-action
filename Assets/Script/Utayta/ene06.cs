@@ -4,38 +4,70 @@ using UnityEngine;
 
 public class ene06 : MonoBehaviour
 {
-    Rigidbody2D rigidbody2D;
-    private float timer = 0;
-    private float timer2 = 0;
-    public float chargetime;
-    public float dashtime;
+    public float jumptimer = 0;
+    public float timer = 0;
+    public float at_time;
+    public float interval;
+    public float jump;
+    GameObject Hero;
+    public GameObject k_at;
+    private Animator anim;
+    Rigidbody2D rigidbody2;
+    public Vector2 force1;
+    public Vector2 jumpforce;
+    private bool isAttack_K;  
+    Vector2 moveVector;                  // 移動速度の入力
+    public float moveForceMultiplier;     // 移動速度の入力に対する追従度
     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
     private bool _isRendered = false;
-    public float sp;
-    int a = 0; // 1回目のダッシュまでに力を加えるのを防ぐために用いた変数
-    void Start()
+    void Start() 
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2 = GetComponent<Rigidbody2D>();
+        this.Hero = GameObject.Find("Hero");
+        anim = GetComponent<Animator>();
     }
-    void Update()
+    void FixedUpdate()
     {
+        Vector2 HeroPos = Hero.transform.position;
+        Vector2 st = transform.position;  
+        if(jumptimer < jump) {
+            jumptimer += Time.fixedDeltaTime;
+        } else {
+            GetComponent<Rigidbody2D>().AddForce(jumpforce,ForceMode2D.Impulse);
+            jumptimer = 0;
+        }
         if (_isRendered) {
-            if (timer >= chargetime && timer <= chargetime + dashtime && a == 0){
-                a++;
-            }
-            if (a == 1){
-                if (timer >= chargetime && timer <= chargetime + dashtime){
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.left * sp, ForceMode2D.Impulse);
-                } else if (timer <= dashtime) {
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.right * sp , ForceMode2D.Impulse);
-                }
-            }
-            if (timer > chargetime + dashtime) {
-                timer = 0;
+            if(HeroPos.x < transform.position.x) {
+                GetComponent<Rigidbody2D>().AddForce(-force1, ForceMode2D.Impulse); 
+            } else {
+                GetComponent<Rigidbody2D>().AddForce(force1, ForceMode2D.Impulse); 
             }
         }
-        timer += Time.fixedDeltaTime;
+        rigidbody2.AddForce(moveForceMultiplier * (moveVector - rigidbody2.velocity));
+        Vector2 origin = new Vector2( transform.position.x, transform.position.y - 2f );
+        RaycastHit2D hit = Physics2D.Raycast( origin , Vector2.down, 130.1f );
+        if (hit.collider != null) {
+            if (hit.collider.tag == "Hero"){
+                if (timer > interval) {
+                    isAttack_K = true;
+                    GameObject attackObj;  //火球の複製
+                    attackObj = Instantiate (k_at);    //複製した火球を生成
+                    attackObj.transform.position = transform.position + new Vector3(0f, -1.6f, 0f);    //火球の位置をplayerの位置に設定
+                    timer = 0;
+                } else {
+                    timer += Time.deltaTime;
+                } 
+            }
+        } else {
+            timer = 3;
+        }
     }
+    void OnTriggerEnter2D (Collider2D col)
+	{
+        if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
+        Destroy (gameObject);
+        }
+	}
     void OnWillRenderObject()
 	{
     //メインカメラに映った時だけ_isRenderedをtrue
@@ -43,10 +75,4 @@ public class ene06 : MonoBehaviour
 		_isRendered = true;
 		}
 	}
-    void OnTriggerEnter2D (Collider2D col)
-	{
-        if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
-        Destroy (gameObject);
-        }
-    }
 }

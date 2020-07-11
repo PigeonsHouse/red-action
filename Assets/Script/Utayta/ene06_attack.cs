@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ene05_attack : MonoBehaviour
+public class ene06_attack : MonoBehaviour
 {
     public float speed = 3.0f;
     public float maxDistance = 100.0f;
