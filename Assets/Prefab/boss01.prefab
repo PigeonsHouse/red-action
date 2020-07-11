@@ -163,8 +163,10 @@ MonoBehaviour:
   fire8: {fileID: 8585826226325607860, guid: aa54165e57c07c4409be46800bc09602, type: 3}
   fire9: {fileID: 5549107854528466, guid: 8d9fff1f84bb3cd41be9dd1a60da2f4a, type: 3}
   fire10: {fileID: 5761279110779562876, guid: 9fd225b2d61493d4f9ffbba7d2728608, type: 3}
+  on_damage: 0
   timer: 0
   interval: 5
+  life: 10
   x1: -2.7
   x2: -1.8
   x3: -0.6
@@ -203,4 +205,6 @@ MonoBehaviour:
   y_FPos: -3.5
   x_jump: 15
   y_jump: 220
+  x_huutobi: 300
+  y_huttobi: 400
   speed: 4

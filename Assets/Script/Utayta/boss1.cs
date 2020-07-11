@@ -19,9 +19,12 @@ public class boss1 : MonoBehaviour
     public GameObject fire10;             //ファイアを指定
     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
 	private bool _isRendered = false;
+    public bool on_damage = false;       //ダメージフラグ
+    //public bool isMuteki = false;
     public float timer;
     public float interval;
-    private int life = 10;
+    public int life = 10;
+    //public float mutekiteimer = 0;     //無敵時間の設定
     public float x1;    //fireの位置
     public float x2;
     public float x3;
@@ -61,6 +64,8 @@ public class boss1 : MonoBehaviour
     public float y_FPos;
     public float x_jump;
     public float y_jump;
+    public float x_huutobi;
+    public float y_huttobi;
     public float speed;
     private int checkLR = -1;
     Vector2 turnLU;
@@ -132,7 +137,14 @@ public class boss1 : MonoBehaviour
                 Destroy (gameObject);	
             }
         }
-        
+        if(on_damage){                                                                          // ダメージフラグがtrueで有れば点滅させる
+            float level = Mathf.Abs(Mathf.Sin(Time.time * 20));
+            spRenderer.color = new Color(1f,1f,1f,level);
+        }
+        /*if (mutekiteimer > 2.3) {
+            isMuteki = false;
+            mutekiteimer = 0;
+        }*/
     }
     public void Attack()
     {
@@ -197,8 +209,26 @@ public class boss1 : MonoBehaviour
 	}
     void OnTriggerEnter2D (Collider2D col)
 	{
-        if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
-            life--;
+        if(on_damage == false) {
+            if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
+                life--;
+                OnDamageEffect();
+            }
         }
+    }
+    void OnDamageEffect()                                                           //　ダメージを受けた際の動き
+    {
+        on_damage = true;                                                           // ダメージフラグON
+        //isMuteki = true;                                                            //無敵開始
+        Vector2 huttobiVec = new Vector2( x_huutobi * checkLR * -1, y_huttobi );    // 吹っ飛びベクトルの作成
+        rb.AddForce(huttobiVec * Time.deltaTime , ForceMode2D.Impulse);             // プレイヤーの位置を後ろに飛ばす
+        StartCoroutine("WaitForIt");                                                // コルーチン開始
+    }
+    IEnumerator WaitForIt()
+    {
+        yield return new WaitForSeconds(2);                                     // 1秒間処理を止める
+        on_damage = false;                                                      // １秒後ダメージフラグをfalseにして点滅を戻す
+        spRenderer.color = new Color(1f,1f,1f,1f);
+        //mutekiteimer += Time.deltaTime;
     }
 }
