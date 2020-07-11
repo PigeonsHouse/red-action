@@ -7,7 +7,7 @@ public class fire1 : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 defaultPos;
     public float speed = 3.0f;
-    public float maxDistance = 100.0f;
+    public float maxDistance = 50.0f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,6 +24,8 @@ public class fire1 : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(this.gameObject);
+        if(collision.name == "Hero" || collision.name == "fire(Clone)" || collision.name == "rock(Clone)" || collision.name == "thunder(Clone)" ) {
+            Destroy(this.gameObject);
+        }
     }
 }

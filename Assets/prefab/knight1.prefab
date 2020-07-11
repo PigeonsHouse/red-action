@@ -185,3 +185,18 @@ MonoBehaviour:
   y8: -2.4
   y9: -2.4
   y10: -1.3
+  turnPoint1: 342
+  jumpPoint1: 351.3
+  jumpPoint2: 355.2
+  jumpPoint3: 364.5
+  jumpPoint4: 368
+  jumpPoint5: 366
+  jumpPoint6: 353
+  turnPoint2: 376
+  y_highPos: 10.3
+  y_midPos: 5.3
+  y_lowPos: 1.3
+  y_FPos: -3.5
+  x_jump: 15
+  y_jump: 220
+  speed: 4
