@@ -13,6 +13,7 @@ public class ene06 : MonoBehaviour
     public GameObject k_at;
     private Animator anim;
     Rigidbody2D rigidbody2;
+    private SpriteRenderer spRenderer;
     public Vector2 force1;
     public Vector2 jumpforce;
     private bool isAttack_K;  
@@ -20,9 +21,11 @@ public class ene06 : MonoBehaviour
     public float moveForceMultiplier;     // 移動速度の入力に対する追従度
     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
     private bool _isRendered = false;
+    public bool on_damage = false;       //ダメージフラグ
     void Start() 
     {
         rigidbody2 = GetComponent<Rigidbody2D>();
+        spRenderer = GetComponent<SpriteRenderer>();
         this.Hero = GameObject.Find("Hero");
         anim = GetComponent<Animator>();
     }
@@ -30,42 +33,54 @@ public class ene06 : MonoBehaviour
     {
         Vector2 HeroPos = Hero.transform.position;
         Vector2 st = transform.position;  
-        if(jumptimer < jump) {
-            jumptimer += Time.fixedDeltaTime;
-        } else {
-            GetComponent<Rigidbody2D>().AddForce(jumpforce,ForceMode2D.Impulse);
-            jumptimer = 0;
-        }
-        if (_isRendered) {
-            if(HeroPos.x < transform.position.x) {
-                GetComponent<Rigidbody2D>().AddForce(-force1, ForceMode2D.Impulse); 
+        if (!on_damage) {
+            if(jumptimer < jump) {
+                jumptimer += Time.fixedDeltaTime;
             } else {
-                GetComponent<Rigidbody2D>().AddForce(force1, ForceMode2D.Impulse); 
+                GetComponent<Rigidbody2D>().AddForce(jumpforce,ForceMode2D.Impulse);
+                jumptimer = 0;
             }
-        }
-        rigidbody2.AddForce(moveForceMultiplier * (moveVector - rigidbody2.velocity));
-        Vector2 origin = new Vector2( transform.position.x, transform.position.y - 2f );
-        RaycastHit2D hit = Physics2D.Raycast( origin , Vector2.down, 130.1f );
-        if (hit.collider != null) {
-            if (hit.collider.tag == "Hero"){
-                if (timer > interval) {
-                    isAttack_K = true;
-                    GameObject attackObj;  //火球の複製
-                    attackObj = Instantiate (k_at);    //複製した火球を生成
-                    attackObj.transform.position = transform.position + new Vector3(0f, -1.6f, 0f);    //火球の位置をplayerの位置に設定
-                    timer = 0;
+            if (_isRendered) {
+                if(HeroPos.x < transform.position.x) {
+                    GetComponent<Rigidbody2D>().AddForce(-force1, ForceMode2D.Impulse); 
                 } else {
-                    timer += Time.deltaTime;
-                } 
+                    GetComponent<Rigidbody2D>().AddForce(force1, ForceMode2D.Impulse); 
+                }
             }
-        } else {
-            timer = 3;
+            rigidbody2.AddForce(moveForceMultiplier * (moveVector - rigidbody2.velocity));
+            Vector2 origin = new Vector2( transform.position.x, transform.position.y - 2f );
+            RaycastHit2D hit = Physics2D.Raycast( origin , Vector2.down, 130.1f );
+            if (hit.collider != null) {
+                if (hit.collider.tag == "Hero"){
+                    if (timer > interval) {
+                        isAttack_K = true;
+                        GameObject attackObj;  //火球の複製
+                        attackObj = Instantiate (k_at);    //複製した火球を生成
+                        attackObj.transform.position = transform.position + new Vector3(0f, -1.6f, 0f);    //火球の位置をplayerの位置に設定
+                        timer = 0;
+                    } else {
+                        timer += Time.deltaTime;
+                    } 
+                }
+            } else {
+                timer = 3;
+            }
         }
+        if(on_damage){                                                                          // ダメージフラグがtrueで有れば点滅させる
+            float level = Mathf.Abs(Mathf.Sin(Time.time * 50));
+            spRenderer.color = new Color(1f,1f,1f,level);
+        }
+    }
+    public void Dead () {
+        Destroy (gameObject);	
     }
     void OnTriggerEnter2D (Collider2D col)
 	{
         if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
-        Destroy (gameObject);
+            anim.SetTrigger("dead");
+            on_damage = true;                                                           // ダメージフラグON
+			Destroy (rigidbody2);
+			Destroy (GetComponent<CapsuleCollider2D>());
         }
 	}
     void OnWillRenderObject()

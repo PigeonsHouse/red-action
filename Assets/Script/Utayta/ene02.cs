@@ -9,7 +9,9 @@ using UnityEngine;
     public float interval;
     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
 	private bool _isRendered = false;
+    public bool on_damage = false;       //ダメージフラグ
     Rigidbody2D rigidbody2D;
+    private SpriteRenderer spRenderer;
 
     private Animator anim;
     public float timer;
@@ -27,6 +29,7 @@ using UnityEngine;
         }
          
         rigidbody2D = GetComponent<Rigidbody2D>();
+        spRenderer = GetComponent<SpriteRenderer>();
      }
 
      // Update is called once per frame
@@ -41,6 +44,10 @@ using UnityEngine;
                 timer += Time.deltaTime;
             }
         }
+        if(on_damage){                                                                          // ダメージフラグがtrueで有れば点滅させる
+            float level = Mathf.Abs(Mathf.Sin(Time.time * 50));
+            spRenderer.color = new Color(1f,1f,1f,level);
+        }
     }
          
     public void Attack()
@@ -50,6 +57,9 @@ using UnityEngine;
             attackObj = Instantiate (ene_fire);    //複製した火球を生成
             attackObj.transform.position = transform.position + new Vector3(-1.5f, -0.7f, 0f);    //火球の位置をplayerの位置に設定
         }
+    }
+    public void Dead () {
+        Destroy (gameObject);	
     }
 
    void OnWillRenderObject()
@@ -61,7 +71,10 @@ using UnityEngine;
     void OnTriggerEnter2D (Collider2D col)
 	{
 		if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
-			Destroy (gameObject);	
+			anim.SetTrigger("dead");	
+            on_damage = true;                                                           // ダメージフラグON
+			Destroy (rigidbody2D);
+			Destroy (GetComponent<EdgeCollider2D>());
         }
 	}
  }

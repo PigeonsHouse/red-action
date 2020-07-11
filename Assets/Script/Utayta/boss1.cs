@@ -68,6 +68,7 @@ public class boss1 : MonoBehaviour
     public float y_huttobi;
     public float speed;
     private int checkLR = -1;
+    public int mutekitime;
     Vector2 turnLU;
     Vector2 turnLD;
     Vector2 turnRU;
@@ -212,6 +213,7 @@ public class boss1 : MonoBehaviour
         if(on_damage == false) {
             if (col.gameObject.tag == "Fire" || col.gameObject.tag == "Thunder" || col.gameObject.tag == "Rock"){
                 life--;
+                anim.SetTrigger("knock");
                 OnDamageEffect();
             }
         }
@@ -226,7 +228,7 @@ public class boss1 : MonoBehaviour
     }
     IEnumerator WaitForIt()
     {
-        yield return new WaitForSeconds(2);                                     // 1秒間処理を止める
+        yield return new WaitForSeconds(mutekitime);                                     // 1秒間処理を止める
         on_damage = false;                                                      // １秒後ダメージフラグをfalseにして点滅を戻す
         spRenderer.color = new Color(1f,1f,1f,1f);
         //mutekiteimer += Time.deltaTime;
