@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2874714140238463989}
   - component: {fileID: 2874714140238463990}
   m_Layer: 10
-  m_Name: knight1
+  m_Name: boss01
   m_TagString: Enemy1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,9 +190,13 @@ MonoBehaviour:
   jumpPoint2: 355.2
   jumpPoint3: 364.5
   jumpPoint4: 368
-  jumpPoint5: 366
-  jumpPoint6: 353
+  jumpPoint5: 367
+  jumpPoint6: 351.8
+  jumpPoint7: 377.8
+  jumpPoint8: 341
   turnPoint2: 376
+  turnPoint3: 378
+  turnPoint4: 339.8
   y_highPos: 10.3
   y_midPos: 5.3
   y_lowPos: 1.3

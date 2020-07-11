@@ -49,8 +49,12 @@ public class boss1 : MonoBehaviour
     public float jumpPoint4;
     public float jumpPoint5;
     public float jumpPoint6;
+    public float jumpPoint7;
+    public float jumpPoint8;
 
     public float turnPoint2;
+    public float turnPoint3;
+    public float turnPoint4;
     public float y_highPos;
     public float y_midPos;
     public float y_lowPos;
@@ -63,10 +67,14 @@ public class boss1 : MonoBehaviour
     Vector2 turnLD;
     Vector2 turnRU;
     Vector2 turnRD;
+    Vector2 turnFR;
+    Vector2 turnFL;
     Vector2 jumpLD;
     Vector2 jumpLM;
     Vector2 jumpRM;
     Vector2 jumpRD;
+    Vector2 jumpFMR;
+    Vector2 jumpFML;
     Vector2 jumpFR;
     Vector2 jumpFL;
 
@@ -79,12 +87,16 @@ public class boss1 : MonoBehaviour
         turnLD = new Vector2( turnPoint1, y_lowPos  );
         turnRU = new Vector2( turnPoint2, y_highPos );
         turnRD = new Vector2( turnPoint2, y_lowPos  );
+        turnFR = new Vector2( turnPoint3, y_FPos  );
+        turnFL = new Vector2( turnPoint4, y_FPos  );
         jumpLD = new Vector2( jumpPoint1, y_lowPos  );
         jumpLM = new Vector2( jumpPoint2, y_midPos  );
         jumpRM = new Vector2( jumpPoint3, y_midPos  );
         jumpRD = new Vector2( jumpPoint4, y_lowPos  );
-        jumpFR = new Vector2( jumpPoint5, y_FPos  );
-        jumpFL = new Vector2( jumpPoint6, y_FPos  );
+        jumpFMR = new Vector2( jumpPoint5, y_FPos  );
+        jumpFML = new Vector2( jumpPoint6, y_FPos  );
+        jumpFL = new Vector2( jumpPoint7, y_FPos  );
+        jumpFR = new Vector2( jumpPoint8, y_FPos  );
     }
     void Update()
     {
@@ -95,16 +107,20 @@ public class boss1 : MonoBehaviour
             if(checkLR ==  1){
                 JumpCheck(jumpLD);
                 JumpCheck(jumpRM);
+                JumpCheck(jumpFMR);
                 JumpCheck(jumpFR);
                 TurnCheckL(turnRU);
                 TurnCheckL(turnRD);
+                TurnCheckL(turnFR);
             }
             if(checkLR == -1){
                 JumpCheck(jumpRD);
                 JumpCheck(jumpLM);
+                JumpCheck(jumpFML);
                 JumpCheck(jumpFL);
                 TurnCheckR(turnLU);
                 TurnCheckR(turnLD);
+                TurnCheckR(turnFL);
             }
             if(timer > interval){                                                               //animation切り替え
                 anim.SetTrigger("attack");
