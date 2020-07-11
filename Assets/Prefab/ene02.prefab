@@ -139,8 +139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37032350507bc2a4f9a085ca4e00c251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackObj: {fileID: 4731705079428995373}
-  interval: 2
+  ene_fire: {fileID: 7874254904632290595, guid: bcd5914e43238f14d91d0428777561bc,
+    type: 3}
+  interval: 2.5
+  timer: 1.5
 --- !u!68 &8921696213744582066
 EdgeCollider2D:
   m_ObjectHideFlags: 0

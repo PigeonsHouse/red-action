@@ -4,25 +4,26 @@ using UnityEngine;
 
  public class ene02 : MonoBehaviour
  {
-    [Header("攻撃オブジェクト")] public GameObject attackObj;
-    [Header("攻撃間隔")] public float interval;
+    //public GameObject attackObj;
+    public GameObject ene_fire;
+    public float interval;
     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
 	private bool _isRendered = false;
     Rigidbody2D rigidbody2D;
 
     private Animator anim;
-    private float timer;
+    public float timer;
     void Start()
     {
         anim = GetComponent<Animator>();
-        if (anim == null || attackObj == null)
+        if (anim == null || ene_fire == null)
         {
             Debug.Log("設定が足りません");
             Destroy(this.gameObject);
         }
         else
         {
-            attackObj.SetActive(false);
+            //attackObj.SetActive(false);
         }
          
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -31,48 +32,29 @@ using UnityEngine;
      // Update is called once per frame
      void FixedUpdate()
      {
-          AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
-
-          //通常の状態
-          /*if (currentState.IsName("idle"))
-          {*/
-              if(timer > interval)
-              {
-                  anim.SetTrigger("attack");
-                  timer = 0.0f;
-              }
-              else
-              {
-                  timer += Time.deltaTime;
-              }
-          /*}*/
-
-          /* if(timer > interval)
-          {
-              anim.SetBool("Attack", true);
-              timer = 0.0f;
-          }
-         /* else
-          {
-              timer += Time.deltaTime;
-          }*/
-     }
+        AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
+        if (_isRendered) {
+            if(timer > interval) {
+                anim.SetTrigger("attack");
+                timer = 0.0f;
+            } else {
+                timer += Time.deltaTime;
+            }
+        }
+    }
          
-          public void Attack()
-   {
-       if(_isRendered)
-       {
-     GameObject g = Instantiate(attackObj);
-     g.transform.SetParent(transform);
-     g.transform.position = attackObj.transform.position;
-     g.SetActive(true);   
-       }
-   }
+    public void Attack()
+    {
+        if(_isRendered) {
+            GameObject attackObj;  //火球の複製
+            attackObj = Instantiate (ene_fire);    //複製した火球を生成
+            attackObj.transform.position = transform.position + new Vector3(-1.5f, -0.7f, 0f);    //火球の位置をplayerの位置に設定
+        }
+    }
 
    void OnWillRenderObject()
 	{
-    //メインカメラに映った時だけ_isRenderedをtrue
-		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME){
+		if(Camera.current.tag == MAIN_CAMERA_TAG_NAME){             //メインカメラに映った時だけ_isRenderedをtrue
 		_isRendered = true;
 		}
 	}
