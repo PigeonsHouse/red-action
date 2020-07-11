@@ -8,18 +8,24 @@ public class Hero : MonoBehaviour
     public GameObject fire;                     //ファイアを指定
     public GameObject rock;                     //ロックを指定
     public GameObject thunderbolt;              //サンダーを指定
-    public float speed = 30;                    //歩く速さ
-    public float jumpforce = 600f;              //ジャンプ力
+    public Camera camera;                       //カメラ保存用変数
     public LayerMask groundLayer;               //レイヤー保存用変数
-    public string moveFloorTag = "Movefloor";   //レイヤー保存用変数
+    public float speed;                         //歩く速さ
+    public float jumpforce;                     //ジャンプ力
     public float logLR = 1;                     //fire.csに渡す用プレイヤーの左右向き
     public float minstagelocate;                //一番左端の座標
-    public float fallposision = -10;            //落ちる時のy座標
-    public int maxlife = 5;                     //上限ライフ
+    public float fallposision;                  //落ちる時のy座標
+    public int maxlife;                         //上限ライフ
     private int life;                           //ライフ
-    private int count = 0;                      //無敵時間のカウンタ
+    private int count_hit = 0;                  //無敵時間のカウンタ
+    private int count_boss = -1;                //ボス部屋侵入用カウンタ
+    private int count_clear = -1;               //クリア後待機時間のカウンタ
     private float checkLR = 1;                  //プレイヤーの左右向き
+    private float hori;                         //左右入力の格納変数
+    private string moveFloorTag = "Movefloor";  //タグ名保存用変数
+    private bool canMove = true;                //移動用命令を読むかのフラグ
     private bool isHit = false;                 //ヒットしたかのフラグ
+    private bool isHit_anim = false;            //アニメ用のヒットフラグ
     private bool isGround;                      //接地フラグ
     private bool isAttack;                      //攻撃フラグ
     private bool isAttackFire;                  //攻撃フラグ
@@ -27,18 +33,13 @@ public class Hero : MonoBehaviour
     private bool isAttackThunder;               //攻撃フラグ
     private bool isDead = false;                //死亡フラグ
     private bool isDeadTri = false;             //死亡トリガー
+    private bool inBossRoom = false;            //ボス部屋にいるかのフラグ
     private Rigidbody2D rb2d;                   //ゲット用の変数
     private SpriteRenderer spRenderer;          //ゲット用の変数
     private Animator anim;                      //ゲット用の変数
     private Notslipground moveGra;              //動く床のスクリプト格納用変数
     private lifeUIcon lifescr;                  //ライフUIのスクリプト格納用変数
 
-    public Camera camera;
-    private int count_boss = -1;
-    private int count_clear = -1;
-    private bool canMove = true;
-    private bool inBossRoom = false;
-    private float hori;
 
     void Start(){
         rb2d = GetComponent<Rigidbody2D>();
@@ -142,40 +143,44 @@ public class Hero : MonoBehaviour
         }
 
         if ( life <= 0 && GameObject.Find("Hero") ){
+            if (!isDead)isDeadTri = true;
             isDead = true;
-            isDeadTri = true;
         }
         if ( transform.position.y < fallposision){
             isDead = true;
         }
 
-        if (isHit && count == 0) {
+        if (isHit && count_hit == 0) {
             rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
             rb2d.AddForce( new Vector2(checkLR * -1f, 1f) * 8f , ForceMode2D.Impulse);
-            count = 360; // 無敵時間をセット
+            count_hit = 360; // 無敵時間をセット
             gameObject.layer = LayerMask.NameToLayer("PLdamage");
         }
-        if (count > 0) {
-            if (count % 4 == 2 || count % 4 == 3){
+        if(count_hit < (360 - 100)){
+            isHit_anim = false;
+        }
+        if (count_hit > 0) {
+            if (count_hit % 4 == 2 || count_hit % 4 == 3){
                 spRenderer.color = new Color(1f, 1f, 1f, 0f);
             }else{
                 spRenderer.color = new Color(1f, 1f, 1f, 255f);
             }
-            --count;
-            if (count <= 0) {
+            --count_hit;
+            if (count_hit <= 0) {
                 // 無敵時間の終わり
-                count = 0;
+                count_hit = 0;
                 isHit = false;
                 gameObject.layer = LayerMask.NameToLayer("Default");
             }
         }
 
         anim.SetFloat("Speed", Mathf.Abs(hori * speed));
-        anim.SetBool("isGround", isGround );            
+        anim.SetBool("isGround", isGround );
+        anim.SetBool("isHit", isHit_anim );
         anim.SetBool("isAttackFire", isAttackFire );
         anim.SetBool("isAttackRock", isAttackRock );
         anim.SetBool("isAttackThunder", isAttackThunder );
-
+        anim.SetBool("isDead", isDead );
 
         if (SceneManager.GetActiveScene().name == "Game"){
             if(inBossRoom == true){
@@ -185,7 +190,6 @@ public class Hero : MonoBehaviour
                 canMove = false;
                 if (count_boss < 0){
                     rb2d.velocity = new Vector2( 0f, velY );
-                    hori = 0f;
                     count_boss = 500;
                 }else if(count_boss >= 1){
                     --count_boss;
@@ -206,20 +210,24 @@ public class Hero : MonoBehaviour
                 canMove = false;
                 if(count_clear < 0){
                     GameObject.Find("BGM").GetComponent<ChangeMusic>().Change(3);
-                    count_clear++;
+                    count_clear = 800;
+                }
+                if(count_clear > 0){
+                    --count_clear;
+                }
+                if(count_clear == 0){
+                    SceneManager.LoadScene("Game");
                 }
             }
         }
 
-
-        anim.SetBool("isDead", isDead );
         if(isDead){
             rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
             rb2d.AddForce( Vector2.down * 5f);
             lifescr.SetPlayerLifeUI(0);
             if(isDeadTri){
                 rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
-                rb2d.AddForce( Vector2.up * 11f , ForceMode2D.Impulse);
+                rb2d.AddForce( Vector2.up * 20f , ForceMode2D.Impulse);
                 Destroy(GetComponent<CapsuleCollider2D>());
                 isDeadTri = false;
             }
@@ -249,10 +257,11 @@ public class Hero : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
         if (canMove){
-            if (col.gameObject.tag == "Enemy1" && count <= 0){
+            if (col.gameObject.tag == "Enemy1" && count_hit <= 0){
                 life -= 1;
                 lifescr.SetPlayerLifeUI(life);
                 isHit = true;
+                isHit_anim = true;
             }else if(col.collider.tag == "Movefloor"){
                 moveGra = col.gameObject.GetComponent<Notslipground>();
             }
@@ -265,10 +274,11 @@ public class Hero : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider){
         if(canMove){
-            if (collider.gameObject.tag == "Enemy1" && count <= 0){
+            if (collider.gameObject.tag == "Enemy1" && count_hit <= 0){
                 life -= 1;
                 lifescr.SetPlayerLifeUI(life);
                 isHit = true;
+                isHit_anim = true;
             }
             if (collider.gameObject.tag == "Food"){
                 if (life < maxlife) life += 1;
