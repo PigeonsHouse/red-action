@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 201339967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2655113845716457486, guid: c6c23f9cdafe0484d9c4927ef31cc8b3,
     type: 3}
@@ -163,3 +163,4 @@ MonoBehaviour:
   force1: {x: 0.17, y: 0}
   jumpforce: {x: 0, y: 3.9}
   moveForceMultiplier: 2
+  on_damage: 0
