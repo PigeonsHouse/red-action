@@ -6,20 +6,36 @@ public class Warpsystem : MonoBehaviour
 {
     private GameObject obj;
     public Warpsystem transObj;
-    private Vector3 transVec;
+    private Vector2 transVec;
+    private bool moveStatus;
  
     void Start()
     {
-        //移動先(円柱B)の座標を取得する
+        
         transVec = transObj.transform.position;
+        //初期では移動可能なためTrue
+        moveStatus = true;
     }
  
-    //物体と重なる瞬間呼ばれる
-    void OnTriggerEnter(Collider other)
+    void Update (){
+        
+    }
+    void OnTriggerEnter2D(Collider2D other)
     {
-        //重なったオブジェクトを取得
+        
         obj = GameObject.Find(other.name);
-        //移動先(円柱B)の座標に移動する
-        obj.transform.position = transVec;
+        //自分が移動可能なとき移動する。
+        if (moveStatus)
+        {
+            //移動先は直後移動できないようにする
+            transObj.moveStatus = false;
+            obj.transform.position = transVec;
+        }
     }
+    //物体と離れた直後呼ばれる
+    void OnTriggerExit2D(Collider2D other)
+    {
+        //移動可能にする。
+        moveStatus = true;
     }
+}
