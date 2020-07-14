@@ -306,9 +306,6 @@ public class Hero : MonoBehaviour{
         Vector2 wallArea2 = new Vector2 ( 0.8f * hori, 2.5f );
         Vector2 wallArea3 = new Vector2 ( 0.6f * hori, 0.2f );
         Vector2 wallArea4 = new Vector2 ( 1.1f * hori, 1.0f );
-        Debug.DrawLine( groundPos + groundArea, groundPos - groundArea, Color.red );
-        Debug.DrawLine( groundPos + wallArea1, groundPos + wallArea2, Color.red );
-        Debug.DrawLine( groundPos + wallArea3, groundPos + wallArea4, Color.red );
         area1 = Physics2D.OverlapArea( groundPos + wallArea1, groundPos + wallArea2, groundLayer );
         area2 = Physics2D.OverlapArea( groundPos + wallArea3, groundPos + wallArea4, groundLayer );
         isGround = Physics2D.OverlapArea( groundPos + groundArea, groundPos - groundArea, groundLayer );
@@ -317,7 +314,6 @@ public class Hero : MonoBehaviour{
         }else{
             isSloping = false;
         }
-        Debug.Log(isSloping);
     }
 
     void OnCollisionEnter2D(Collision2D col){
