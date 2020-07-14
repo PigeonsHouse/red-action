@@ -226,21 +226,73 @@ public class Hero : MonoBehaviour{
                 if(count_clear == 0){
                     SceneManager.LoadScene("Game");
                 }
+            }            
+            if(isDead){
+                rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
+                rb2d.AddForce( Vector2.down * 5f);
+                lifescr.SetPlayerLifeUI(0);
+                if(isDeadTri){
+                    rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
+                    rb2d.AddForce( Vector2.up * 20f , ForceMode2D.Impulse);
+                    Destroy(GetComponent<CapsuleCollider2D>());
+                    isDeadTri = false;
+                }
+                if (transform.position.y < -110f ){
+                    SceneManager.LoadScene("Game");
+                }
             }
         }
 
-        if(isDead){
-            rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
-            rb2d.AddForce( Vector2.down * 5f);
-            lifescr.SetPlayerLifeUI(0);
-            if(isDeadTri){
-                rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
-                rb2d.AddForce( Vector2.up * 20f , ForceMode2D.Impulse);
-                Destroy(GetComponent<CapsuleCollider2D>());
-                isDeadTri = false;
+        if (SceneManager.GetActiveScene().name == "Gamesecond"){
+/*            if(inBossRoom == true){
+                minstagelocate = 339.4f;
             }
-            if (transform.position.y < -110f ){
-                SceneManager.LoadScene("Game");
+/*            if (transform.position.x >= 338 && inBossRoom == false){
+                canMove = false;
+                if (count_boss < 0){
+                    rb2d.velocity = new Vector2( 0f, velY );
+                    count_boss = 500;
+                }else if(count_boss >= 1){
+                    --count_boss;
+                }
+                if (count_boss == 400){
+                    GameObject.Find("BGM").GetComponent<ChangeMusic>().Change(2);
+                }
+                if(count_boss < 200){
+                    camera.orthographicSize += 1f / 200f;
+                    rb2d.AddForce( Vector2.right * speed * 1.5f * Time.deltaTime );
+                }
+                if(count_boss == 0){
+                    canMove = true;
+                    inBossRoom = true;
+                }
+            }
+            if (GameObject.Find("boss02") == null){
+                canMove = false;
+                if(count_clear < 0){
+                    GameObject.Find("BGM").GetComponent<ChangeMusic>().Change(3);
+                    count_clear = 800;
+                }
+                if(count_clear > 0){
+                    --count_clear;
+                }
+                if(count_clear == 0){
+                    SceneManager.LoadScene("Gamesecond");
+                }
+            }*/
+            if(isDead){
+                rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
+                rb2d.AddForce( Vector2.down * 5f);
+                lifescr.SetPlayerLifeUI(0);
+                if(isDeadTri){
+                    rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
+                    rb2d.AddForce( Vector2.up * 20f , ForceMode2D.Impulse);
+                    Destroy(GetComponent<CapsuleCollider2D>());
+                    isDeadTri = false;
+                }
+                if (transform.position.y < -110f ){
+                    SceneManager.LoadScene("Gamesecond");
+                }
             }
         }
     }
