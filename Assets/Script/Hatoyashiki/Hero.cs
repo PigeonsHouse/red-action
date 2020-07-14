@@ -224,7 +224,7 @@ public class Hero : MonoBehaviour{
                     --count_clear;
                 }
                 if(count_clear == 0){
-                    SceneManager.LoadScene("Game");
+                    SceneManager.LoadScene("Gamesecond");
                 }
             }            
             if(isDead){
