@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Hero : MonoBehaviour
-{
+public class Hero : MonoBehaviour{
     public GameObject fire;                     //ファイアを指定
     public GameObject rock;                     //ロックを指定
     public GameObject thunderbolt;              //サンダーを指定
@@ -27,6 +26,9 @@ public class Hero : MonoBehaviour
     private bool isHit = false;                 //ヒットしたかのフラグ
     private bool isHit_anim = false;            //アニメ用のヒットフラグ
     private bool isGround;                      //接地フラグ
+    private bool area1;                         //坂道上部フラグ
+    private bool area2;                         //坂道下部フラグ
+    private bool isSloping;                     //坂道フラグ
     private bool isAttack;                      //攻撃フラグ
     private bool isAttackFire;                  //攻撃フラグ
     private bool isAttackRock;                  //攻撃フラグ
@@ -34,6 +36,7 @@ public class Hero : MonoBehaviour
     private bool isDead = false;                //死亡フラグ
     private bool isDeadTri = false;             //死亡トリガー
     private bool inBossRoom = false;            //ボス部屋にいるかのフラグ
+    private GameObject movFlo;                  //ロックを指定
     private Rigidbody2D rb2d;                   //ゲット用の変数
     private SpriteRenderer spRenderer;          //ゲット用の変数
     private Animator anim;                      //ゲット用の変数
@@ -52,23 +55,29 @@ public class Hero : MonoBehaviour
     
     void Update(){
         if (!isDead && canMove){
-            hori = Input.GetAxisRaw("Horizontal");                       //グラフィック左右反転処理//////////////////////////////////////
+            hori = Input.GetAxisRaw("Horizontal");                       //グラフィック左右反転処理
             if (!isAttackRock && !isAttackThunder){
                 if ( hori < 0 ){
                     spRenderer.flipX = true;
                     checkLR = -1;
-                }else if ( hori > 0 ){
+                } else if ( hori > 0 ) {
                     spRenderer.flipX = false;
                     checkLR = 1;
                 }
-                rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
+                if(isSloping){
+                    gameObject.transform.Translate(0.1f * hori, 0f, 0f);
+                    //Vector2 slope = new Vector2( 14f, 8f );
+                    //rb2d.AddForce( slope * speed * hori * Time.deltaTime );     //左右移動処理
+                }else{
+                    rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
+                }
             }
 
-            if ( Input.GetKeyDown(KeyCode.K) && isGround && !isAttackRock ){                     //ジャンプ処理////////////////////////////////////////
+            if ( Input.GetKeyDown(KeyCode.K) && isGround && !isAttackRock ){                     //ジャンプ処理
                 rb2d.AddForce( Vector2.up * jumpforce , ForceMode2D.Impulse);
             }
 
-            if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && !( Input.GetKey(KeyCode.S) ) && !isAttack ){      //火球の生成処理/////////////
+            if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && !( Input.GetKey(KeyCode.S) ) && !isAttack ){      //火球の生成処理
                 isAttack = true;
                 isAttackFire = true;
                 logLR = checkLR;
@@ -114,8 +123,7 @@ public class Hero : MonoBehaviour
         }
         float velX = rb2d.velocity.x;
         float velY = rb2d.velocity.y;
-            
-                
+
         if( transform.position.x < minstagelocate ){
             transform.position = new Vector2( minstagelocate, transform.position.y );
             rb2d.velocity = new Vector2( 0f, velY );
@@ -142,7 +150,7 @@ public class Hero : MonoBehaviour
             isAttackThunder = isAttackRock = isAttackFire = isAttack = false;
         }
 
-        if ( life <= 0 && GameObject.Find("Hero") ){
+        if ( life <= 0 ){
             if (!isDead)isDeadTri = true;
             isDead = true;
         }
@@ -239,20 +247,25 @@ public class Hero : MonoBehaviour
 
     void FixedUpdate(){
         isGround = false;
-        Vector2 groundPos =
-        new Vector2 (
-            transform.position.x,
-            transform.position.y
-        );
-        Vector2 groundArea = new Vector2( 0.125f, 0.5f );
-        Vector2 chousei = new Vector2( 0, 1.5f );
-        isGround =
-            Physics2D.OverlapArea(
-                groundPos + groundArea - chousei, 
-                groundPos - groundArea - chousei,
-                groundLayer
-            );
-
+        isSloping = false;
+        Vector2 groundPos = new Vector2 ( transform.position.x, transform.position.y - 1.5f );
+        Vector2 groundArea = new Vector2( 0.14f, 0.5f );
+        Vector2 wallArea1 = new Vector2 ( 0.3f * hori, 1.0f );
+        Vector2 wallArea2 = new Vector2 ( 0.8f * hori, 2.5f );
+        Vector2 wallArea3 = new Vector2 ( 0.6f * hori, 0.2f );
+        Vector2 wallArea4 = new Vector2 ( 1.1f * hori, 1.0f );
+        Debug.DrawLine( groundPos + groundArea, groundPos - groundArea, Color.red );
+        Debug.DrawLine( groundPos + wallArea1, groundPos + wallArea2, Color.red );
+        Debug.DrawLine( groundPos + wallArea3, groundPos + wallArea4, Color.red );
+        area1 = Physics2D.OverlapArea( groundPos + wallArea1, groundPos + wallArea2, groundLayer );
+        area2 = Physics2D.OverlapArea( groundPos + wallArea3, groundPos + wallArea4, groundLayer );
+        isGround = Physics2D.OverlapArea( groundPos + groundArea, groundPos - groundArea, groundLayer );
+        if (!area1 && area2){
+            isSloping = true;
+        }else{
+            isSloping = false;
+        }
+        Debug.Log(isSloping);
     }
 
     void OnCollisionEnter2D(Collision2D col){
@@ -263,13 +276,13 @@ public class Hero : MonoBehaviour
                 isHit = true;
                 isHit_anim = true;
             }else if(col.collider.tag == "Movefloor"){
-                moveGra = col.gameObject.GetComponent<Notslipground>();
+                movFlo = col.gameObject;
             }
         }
     }
 
     void OnCollisionExit2D(Collision2D col){
-        moveGra = null;
+        movFlo = null;
     }
 
     void OnTriggerEnter2D(Collider2D collider){
