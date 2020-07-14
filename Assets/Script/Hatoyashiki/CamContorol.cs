@@ -5,6 +5,8 @@ using UnityEngine;
 public class CamContorol : MonoBehaviour
 {
     public GameObject hero;
+    public float camcenter_x;
+    public float camcenter_y;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,18 +22,18 @@ public class CamContorol : MonoBehaviour
             this.transform.position.z
         );
 
-        if (this.transform.position.x < 0){
+        if (this.transform.position.x < camcenter_x){
             transform.position = new Vector3(
-                0,
+                camcenter_x,
                 this.transform.position.y,
                 this.transform.position.z
             );
         }
 
-        if (this.transform.position.y < 0){
+        if (this.transform.position.y < camcenter_y){
             transform.position = new Vector3(
                 this.transform.position.x,
-                0,
+                camcenter_y,
                 this.transform.position.z
             );
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour{
+    public static bool bossmaeChecker = false;  //ボス前フラグ
     public GameObject fire;                     //ファイアを指定
     public GameObject rock;                     //ロックを指定
     public GameObject thunderbolt;              //サンダーを指定
