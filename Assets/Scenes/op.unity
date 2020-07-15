@@ -407,7 +407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3044\u304F\u308F\u3088"
+  m_Text: "\u59CB\u3081\u308B"
 --- !u!222 &905622316
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -912,9 +912,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Introduction
-
-'
+  m_Text: "\u3042\u3089\u3059\u3058"
 --- !u!222 &1465516500
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1337,7 +1335,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7D42\u308F\u308B\u308F\u306D"
+  m_Text: "\u9589\u3058\u308B"
 --- !u!222 &2118843291
 CanvasRenderer:
   m_ObjectHideFlags: 0
