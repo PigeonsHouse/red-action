@@ -118,8 +118,8 @@ public class boss2 : MonoBehaviour{
             fires1.transform.localScale = new Vector3(2f, -2f * checkLR, 1f);
             fires2.transform.localScale = new Vector3(2f, -2f * checkLR, 1f);
             fires3.transform.localScale = new Vector3(2f, -2f * checkLR, 1f);
-            fires2.transform.Rotate(0f, 0f, -30f * checkLR);
-            fires3.transform.Rotate(0f, 0f, 30f * checkLR);
+            fires2.transform.Rotate(0f, 0f, 30f * checkLR);
+            fires3.transform.Rotate(0f, 0f, -30f * checkLR);
         }
     }
 
