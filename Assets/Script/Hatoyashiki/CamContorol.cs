@@ -7,6 +7,7 @@ public class CamContorol : MonoBehaviour
     public GameObject hero;
     public float camcenter_x;
     public float camcenter_y;
+    public float camzure_y = 2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class CamContorol : MonoBehaviour
     {
         transform.position = new Vector3(
             hero.transform.position.x,
-            hero.transform.position.y - 2f,
+            hero.transform.position.y - camzure_y,
             this.transform.position.z
         );
 

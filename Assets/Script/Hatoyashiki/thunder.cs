@@ -13,6 +13,6 @@ public class thunder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Destroy( gameObject, 0.25f);
+        Destroy( gameObject, 0.16f);
     }
 }

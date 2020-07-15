@@ -85,7 +85,7 @@ public class Hero : MonoBehaviour{
                 //複製した火球を生成
                 bullet = Instantiate (fire);
                 //火球の位置をplayerの位置に設定
-                bullet.transform.position = transform.position + new Vector3(0f, -0.7f, 0f);
+                bullet.transform.position = transform.position + new Vector3(0.5f * checkLR, -0.7f, 0f);
             }
             if ( Input.GetKeyDown(KeyCode.J) && !( Input.GetKey(KeyCode.W) ) && Input.GetKey(KeyCode.S) && !isAttack && isGround ){   //岩の生成処理
                 isAttack = true;
@@ -106,18 +106,19 @@ public class Hero : MonoBehaviour{
                 //落ちるy座標の取得
                 Vector2 thunOrigin = new Vector2( transform.position.x + 7f * checkLR, 6.1f );
                 RaycastHit2D thunHit = Physics2D.Raycast( thunOrigin, Vector2.down, 130.1f );
-                /*if ( thunHit.point.y < transform.position.y - 8f ){
-                    thunHit.point = new Vector2(thunHit.point.x, transform.position.y - 8f);
-                }*/
-                if ( thunHit.collider == null ){
+                if ( thunHit.point.y < transform.position.y - 8f || thunHit.collider == null ){
+                    thunHit.point = new Vector2(thunHit.point.x, transform.position.y - 10f);
+                }
+/*                if ( thunHit.collider == null ){
                     thunHit.point = new Vector2(thunHit.point.x, -8.032941f);
-                } 
+                } */
                 //雷の複製
                 GameObject thunder;
                 //複製した雷を生成
                 thunder = Instantiate (thunderbolt);
                 //雷の位置をplayerの位置に設定
                 thunder.transform.position = new Vector3(transform.position.x + 7f * checkLR, thunHit.point.y, 0f);
+                //Debug.DrawLine( transform.position.x + 7f * checkLR , thunHit.point.y , Color.red );
             }
         }
         float velX = rb2d.velocity.x;
