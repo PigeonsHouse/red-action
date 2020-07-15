@@ -2,18 +2,18 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
  
 public class GameSystem : MonoBehaviour {
  
 	//　スタートボタンを押したら実行する
-	public void GameStart() {
+	public void StartGame() {
 		SceneManager.LoadScene ("Game");
 	}
 
  
 	//　ゲーム終了ボタンを押したら実行する
-	public void GameEnd() {
+	public void EndGame() {
 		#if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;
 		#elif UNITY_WEBPLAYER
@@ -22,9 +22,9 @@ public class GameSystem : MonoBehaviour {
 			Application.Quit();
 		#endif
 	}
-	
-	// Introductionボタンを押したら実行する
+
+	// Introductionボタンを押したら実行
 	public void OnRetry() {
-		SceneManager.LoadScene("Prologue");
+		SceneManager.LoadScene ("Prologue");
 	}
 }
