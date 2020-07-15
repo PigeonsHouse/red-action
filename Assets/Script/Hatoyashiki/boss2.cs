@@ -45,9 +45,7 @@ public class boss2 : MonoBehaviour{
             mutekiteimer = 0;
         }*/
     }
-
-    }
-
+    
     void OnWillRenderObject(){
     //メインカメラに映った時だけ_isRenderedをtrue
         if(Camera.current.tag == MAIN_CAMERA_TAG_NAME){
