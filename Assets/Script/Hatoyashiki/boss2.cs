@@ -14,6 +14,10 @@ public class boss2 : MonoBehaviour{
     private int checkLR = -1;
     private bool _isRendered = false;
     private bool on_damage;
+    public int mutekitime;
+    public float x_huutobi;
+    public float y_huttobi;
+
 
     // Start is called before the first frame update
     void Start(){
