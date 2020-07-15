@@ -66,7 +66,7 @@ public class Hero : MonoBehaviour{
                     checkLR = 1;
                 }
                 if(isSloping){
-                    gameObject.transform.Translate(0.1f * hori, 0f, 0f);
+                    gameObject.transform.Translate(0.05f * hori, 0f, 0f);
                 }else{
                     rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
                 }
@@ -243,10 +243,10 @@ public class Hero : MonoBehaviour{
         }
 
         if (SceneManager.GetActiveScene().name == "Gamesecond"){
-/*            if(inBossRoom == true){
-                minstagelocate = 339.4f;
+            if(inBossRoom == true){
+                minstagelocate = 1265.4f;
             }
-/*            if (transform.position.x >= 338 && inBossRoom == false){
+            if (transform.position.x >= 1264f && inBossRoom == false){
                 canMove = false;
                 if (count_boss < 0){
                     rb2d.velocity = new Vector2( 0f, velY );
@@ -257,9 +257,9 @@ public class Hero : MonoBehaviour{
                 if (count_boss == 400){
                     GameObject.Find("BGM").GetComponent<ChangeMusic>().Change(2);
                 }
-                if(count_boss < 200){
-                    camera.orthographicSize += 1f / 200f;
-                    rb2d.AddForce( Vector2.right * speed * 1.5f * Time.deltaTime );
+                if(count_boss < 100){
+                    camera.orthographicSize += 1f / 100f;
+                    rb2d.AddForce( Vector2.right * speed * Time.deltaTime );
                 }
                 if(count_boss == 0){
                     canMove = true;
@@ -276,9 +276,9 @@ public class Hero : MonoBehaviour{
                     --count_clear;
                 }
                 if(count_clear == 0){
-                    SceneManager.LoadScene("Gamesecond");
+                    SceneManager.LoadScene("GameClear");
                 }
-            }*/
+            }
             if(isDead){
                 rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
                 rb2d.AddForce( Vector2.down * 5f);
