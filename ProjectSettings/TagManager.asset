@@ -51,8 +51,11 @@ TagManager:
   - name: BG
     uniqueID: 1218643893
     locked: 0
-  - name: Player
+  - name: PlayerObj
     uniqueID: 201339967
+    locked: 0
+  - name: newPlayer
+    uniqueID: 4090076183
     locked: 0
   - name: Behind map
     uniqueID: 336129205

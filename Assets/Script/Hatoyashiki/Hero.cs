@@ -67,8 +67,6 @@ public class Hero : MonoBehaviour{
                 }
                 if(isSloping){
                     gameObject.transform.Translate(0.1f * hori, 0f, 0f);
-                    //Vector2 slope = new Vector2( 14f, 8f );
-                    //rb2d.AddForce( slope * speed * hori * Time.deltaTime );     //左右移動処理
                 }else{
                     rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
                 }
