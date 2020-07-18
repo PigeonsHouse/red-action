@@ -229,8 +229,6 @@ public class Hero : MonoBehaviour{
             if(inBossRoom == true){
                 minstagelocate = 339.4f;
                 SaveData1_1 = 1;
-            }else{
-                SaveData1_1 = 0;
             }
             if (transform.position.x >= 338 && inBossRoom == false){
                 canMove = false;
@@ -284,14 +282,10 @@ public class Hero : MonoBehaviour{
         if (SceneManager.GetActiveScene().name == "Gamesecond"){
             if(transform.position.x >= 1083.5f){
                 SaveData2_1 = 1;
-            }else{
-                SaveData2_1 = 0;
             }
             if(inBossRoom == true){
                 minstagelocate = 1265.4f;
                 SaveData2_2 = 1;
-            }else{
-                SaveData2_2 = 0;
             }
             if (transform.position.x >= 1264f && inBossRoom == false){
                 canMove = false;
