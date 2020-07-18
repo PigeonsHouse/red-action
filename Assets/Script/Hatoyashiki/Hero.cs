@@ -37,6 +37,9 @@ public class Hero : MonoBehaviour{
     private bool isDead = false;                //死亡フラグ
     private bool isDeadTri = false;             //死亡トリガー
     private bool inBossRoom = false;            //ボス部屋にいるかのフラグ
+    private int SaveData1_1 = 0;                //中間フラグ1-1
+    private int SaveData2_1 = 0;                //中間フラグ2-1
+    private int SaveData2_2 = 0;                //中間フラグ2-2
     private GameObject movFlo;                  //ロックを指定
     private Rigidbody2D rb2d;                   //ゲット用の変数
     private SpriteRenderer spRenderer;          //ゲット用の変数
@@ -46,12 +49,41 @@ public class Hero : MonoBehaviour{
 
 
     void Start(){
+        SaveData1_1 = PlayerPrefs.GetInt("1_1");
+        SaveData2_1 = PlayerPrefs.GetInt("2_1");
+        SaveData2_2 = PlayerPrefs.GetInt("2_2");
         rb2d = GetComponent<Rigidbody2D>();
         spRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         lifescr = GetComponent<lifeUIcon>();
         life = maxlife;
         lifescr.SetPlayerLifeUI(life);
+        if(SceneManager.GetActiveScene().name == "Game"){
+            if(SaveData1_1 != 0){
+                transform.position = new Vector2( 334f, -2.4f );
+            }else{
+                transform.position = new Vector2( -10f, -2.4f );
+            }
+        }
+        if(SceneManager.GetActiveScene().name == "Gamesecond"){
+            if(SaveData2_2 != 0){
+                transform.position = new Vector2( 1260f, -2.4f );
+            }else if(SaveData2_1 != 0){
+                transform.position = new Vector2( 1110, 2f );
+            }else{
+                transform.position = new Vector2( -4f, -2.4f );
+            }
+        }
+        if(SceneManager.GetActiveScene().name == "Game" && SaveData1_1 != 0){
+            transform.position = new Vector2( 334f, -2.4f );
+        }
+        if(SceneManager.GetActiveScene().name == "Gamesecond" && SaveData2_1 != 0){
+            transform.position = new Vector2( 1110f, 2f );
+        }
+        if(SceneManager.GetActiveScene().name == "Gamesecond" && SaveData2_2 != 0){
+            transform.position = new Vector2( 1260f, -2.4f );
+        }
+        Debug.Log(SaveData1_1);
     }
     
     void Update(){
@@ -193,6 +225,9 @@ public class Hero : MonoBehaviour{
         if (SceneManager.GetActiveScene().name == "Game"){
             if(inBossRoom == true){
                 minstagelocate = 339.4f;
+                SaveData1_1 = 1;
+            }else{
+                SaveData1_1 = 0;
             }
             if (transform.position.x >= 338 && inBossRoom == false){
                 canMove = false;
@@ -244,8 +279,16 @@ public class Hero : MonoBehaviour{
         }
 
         if (SceneManager.GetActiveScene().name == "Gamesecond"){
+            if(transform.position.x >= 1100){
+                SaveData2_1 = 1;
+            }else{
+                SaveData2_1 = 0;
+            }
             if(inBossRoom == true){
                 minstagelocate = 1265.4f;
+                SaveData2_2 = 1;
+            }else{
+                SaveData2_2 = 0;
             }
             if (transform.position.x >= 1264f && inBossRoom == false){
                 canMove = false;
@@ -295,6 +338,10 @@ public class Hero : MonoBehaviour{
                 }
             }
         }
+        PlayerPrefs.SetInt("1_1", SaveData1_1);
+        PlayerPrefs.SetInt("2_1", SaveData2_1);
+        PlayerPrefs.SetInt("2_2", SaveData2_2);
+        PlayerPrefs.Save();
     }
 
     void FixedUpdate(){
