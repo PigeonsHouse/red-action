@@ -262,7 +262,7 @@ public class Hero : MonoBehaviour{
                 if(count_clear == 0){
                     SceneManager.LoadScene("Gamesecond");
                 }
-            }            
+            }
             if(isDead){
                 rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
                 rb2d.AddForce( Vector2.down * 5f);
@@ -332,6 +332,23 @@ public class Hero : MonoBehaviour{
                 }
                 if (transform.position.y < -110f ){
                     SceneManager.LoadScene("Gamesecond");
+                }
+            }
+        }
+
+        if(SceneManager.GetActiveScene().name == "OCstage"){
+            if(isDead){
+                rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
+                rb2d.AddForce( Vector2.down * 5f);
+                lifescr.SetPlayerLifeUI(0);
+                if(isDeadTri){
+                    rb2d.velocity = new Vector2( 0f, rb2d.velocity.y );
+                    rb2d.AddForce( Vector2.up * 20f , ForceMode2D.Impulse);
+                    Destroy(GetComponent<CapsuleCollider2D>());
+                    isDeadTri = false;
+                }
+                if (transform.position.y < -110f ){
+                    SceneManager.LoadScene("OCstage");
                 }
             }
         }

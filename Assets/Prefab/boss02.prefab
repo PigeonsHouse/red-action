@@ -154,10 +154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fire: {fileID: 8119605421108910595, guid: b2a7ead4204013e4fa59e45d4183d0fb, type: 3}
+  hero: {fileID: 0}
   interval: 5
-  speed: 4
+  speed: 700
   life: 15
-  mutekitime: 0
+  mutekitime: 10
   x_huutobi: 300
   y_huttobi: 400
   x_jump: 15

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class boss2 : MonoBehaviour{
     public GameObject fire;
+    public GameObject hero;
     public float interval;
     public float speed;
     public int life = 15;
@@ -23,6 +24,7 @@ public class boss2 : MonoBehaviour{
     public float pos_y1;
     public float pos_y2;
     private const string MAIN_CAMERA_TAG_NAME = "MainCamera";
+    private float minstagelocate = 1265.4f;
     private float timer;
     private SpriteRenderer spRenderer;
     private Animator anim;
@@ -30,6 +32,7 @@ public class boss2 : MonoBehaviour{
     private int checkLR = -1;
     private bool _isRendered = false;
     private bool on_damage;
+    private bool haigo;
     private Vector2 ret1;
     private Vector2 ret2;
     private Vector2 ret3;
@@ -57,7 +60,7 @@ public class boss2 : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         if (_isRendered) {
-            transform.position += new Vector3(speed * checkLR * 0.01f, 0, 0);
+            transform.position += new Vector3(speed * checkLR * 0.01f * Time.deltaTime, 0, 0);
             if(timer > interval){                                                               //animation切り替え
                 anim.SetTrigger("attack");
                 timer = 0.0f;
@@ -72,22 +75,42 @@ public class boss2 : MonoBehaviour{
                 TurnCheck(ret2);
                 JumpCheck(jmp2);
                 JumpCheck(jmp4);
+                if(transform.position.x < ret_x1){
+                    checkLR *= -1;
+                    spRenderer.flipX = !spRenderer.flipX;
+                }
             }
             if(checkLR == 1){
                 TurnCheck(ret3);
                 TurnCheck(ret4);
                 JumpCheck(jmp1);
                 JumpCheck(jmp3);
+                if(transform.position.x > ret_x4){
+                    checkLR *= -1;
+                    spRenderer.flipX = !spRenderer.flipX;
+                }
             }
         }
         if(on_damage){                                                                          // ダメージフラグがtrueで有れば点滅させる
             float level = Mathf.Abs(Mathf.Sin(Time.time * 20));
             spRenderer.color = new Color(1f,1f,1f,level);
         }
+        if( (hero.transform.position.x > transform.position.x && checkLR == -1) || (hero.transform.position.x < transform.position.x && checkLR == 1)){
+            haigo = true;
+        }else{
+            haigo = false;
+        }
+        float velX = rb2d.velocity.x;
+        float velY = rb2d.velocity.y;
+        if( transform.position.x < minstagelocate ){
+            transform.position = new Vector2( minstagelocate, transform.position.y );
+            rb2d.velocity = new Vector2( 0f, velY );
+        }
     }
     
     void Attack(){
         if (life < 8){
+            speed = 900f;
             interval = 3;
             GameObject fires1 = Instantiate(fire);
             GameObject fires2 = Instantiate(fire);
@@ -152,10 +175,10 @@ public class boss2 : MonoBehaviour{
             }
         }
     }
-    void OnDamageEffect(){                                                           //　ダメージを受けた際の動き
+    void OnDamageEffect(){                                                          //　ダメージを受けた際の動き
         on_damage = true;                                                           // ダメージフラグON
-        Vector2 huttobiVec = new Vector2( x_huutobi * checkLR * -1, y_huttobi );    // 吹っ飛びベクトルの作成
-        rb2d.AddForce(huttobiVec * Time.deltaTime , ForceMode2D.Impulse);             // プレイヤーの位置を後ろに飛ばす
+        Vector2 huttobiVec = new Vector2( -x_huutobi * checkLR, y_huttobi );        // 吹っ飛びベクトルの作成
+        rb2d.AddForce(huttobiVec * Time.deltaTime, ForceMode2D.Impulse);            // プレイヤーの位置を後ろに飛ばす
         StartCoroutine("WaitForIt");                                                // コルーチン開始
     }
     IEnumerator WaitForIt(){
