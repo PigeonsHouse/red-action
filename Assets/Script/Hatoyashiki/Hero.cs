@@ -46,7 +46,11 @@ public class Hero : MonoBehaviour{
     private Animator anim;                      //ゲット用の変数
     private Notslipground moveGra;              //動く床のスクリプト格納用変数
     private lifeUIcon lifescr;                  //ライフUIのスクリプト格納用変数
-
+    private Vector2 world1Point = new Vector2 ( -10f , -2.4f );
+    private Vector2 world2Point = new Vector2 ( -4f  , -2.4f );
+    private Vector2 savePoint1_1 = new Vector2( 334f , -2.4f );
+    private Vector2 savePoint2_1 = new Vector2( 1110f, 2f    );
+    private Vector2 savePoint2_2 = new Vector2( 1260f, -2.4f );
 
     void Start(){
         SaveData1_1 = PlayerPrefs.GetInt("1_1");
@@ -60,18 +64,18 @@ public class Hero : MonoBehaviour{
         lifescr.SetPlayerLifeUI(life);
         if(SceneManager.GetActiveScene().name == "Game"){
             if(SaveData1_1 != 0){
-                transform.position = new Vector2( 334f, -2.4f );
+                transform.position = savePoint1_1;
             }else{
-                transform.position = new Vector2( -10f, -2.4f );
+                transform.position = world1Point;
             }
         }
         if(SceneManager.GetActiveScene().name == "Gamesecond"){
             if(SaveData2_2 != 0){
-                transform.position = new Vector2( 1260f, -2.4f );
+                transform.position = savePoint2_2;
             }else if(SaveData2_1 != 0){
-                transform.position = new Vector2( 1110, 2f );
+                transform.position = savePoint2_1;
             }else{
-                transform.position = new Vector2( -4f, -2.4f );
+                transform.position = world2Point;
             }
         }
         if(SceneManager.GetActiveScene().name == "Game" && SaveData1_1 != 0){
@@ -83,7 +87,6 @@ public class Hero : MonoBehaviour{
         if(SceneManager.GetActiveScene().name == "Gamesecond" && SaveData2_2 != 0){
             transform.position = new Vector2( 1260f, -2.4f );
         }
-        Debug.Log(SaveData1_1);
     }
     
     void Update(){
@@ -279,7 +282,7 @@ public class Hero : MonoBehaviour{
         }
 
         if (SceneManager.GetActiveScene().name == "Gamesecond"){
-            if(transform.position.x >= 1100){
+            if(transform.position.x >= 1083.5f){
                 SaveData2_1 = 1;
             }else{
                 SaveData2_1 = 0;
