@@ -66,7 +66,7 @@ public class Hero : MonoBehaviour{
                     checkLR = 1;
                 }
                 if(isSloping){
-                    gameObject.transform.Translate(0.05f * hori, 0f, 0f);
+                    gameObject.transform.Translate(0.045f * hori, 0f, 0f);
                 }else{
                     rb2d.AddForce( Vector2.right * speed * hori * Time.deltaTime );     //左右移動処理
                 }
@@ -302,13 +302,15 @@ public class Hero : MonoBehaviour{
         isSloping = false;
         Vector2 groundPos = new Vector2 ( transform.position.x, transform.position.y - 1.5f );
         Vector2 groundArea = new Vector2( 0.14f, 0.5f );
-        Vector2 wallArea1 = new Vector2 ( 0.3f * hori, 1.0f );
-        Vector2 wallArea2 = new Vector2 ( 0.8f * hori, 2.5f );
+        Vector2 wallArea1 = new Vector2 ( 0.3f * hori, 0.7f );
+        Vector2 wallArea2 = new Vector2 ( 0.8f * hori, 2.0f );
         Vector2 wallArea3 = new Vector2 ( 0.6f * hori, 0.2f );
-        Vector2 wallArea4 = new Vector2 ( 1.1f * hori, 1.0f );
+        Vector2 wallArea4 = new Vector2 ( 1.1f * hori, 0.7f );
         area1 = Physics2D.OverlapArea( groundPos + wallArea1, groundPos + wallArea2, groundLayer );
         area2 = Physics2D.OverlapArea( groundPos + wallArea3, groundPos + wallArea4, groundLayer );
         isGround = Physics2D.OverlapArea( groundPos + groundArea, groundPos - groundArea, groundLayer );
+        Debug.DrawLine( groundPos + wallArea1, groundPos + wallArea2, Color.red );
+        Debug.DrawLine( groundPos + wallArea3, groundPos + wallArea4, Color.red );
         if (!area1 && area2){
             isSloping = true;
         }else{
