@@ -762,7 +762,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Introduction
+  m_Text: Story
 --- !u!222 &1465516500
 CanvasRenderer:
   m_ObjectHideFlags: 0
