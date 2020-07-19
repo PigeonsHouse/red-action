@@ -29,9 +29,11 @@ public class GameSystem : MonoBehaviour {
 			Application.Quit();
 		#endif
 	}
-
 	// Introductionボタンを押したら実行
 	public void OnRetry() {
 		SceneManager.LoadScene ("Prologue");
+	}
+	public void Credit() {
+		SceneManager.LoadScene ("Credit");
 	}
 }
